@@ -2806,10 +2806,10 @@ person 概念とは異なることに注意してほしい。ここでは person
 である。
 
 ##### 必要条件
-・Person オブジェクトに複数の識別プロパティを返却する能力がある LRS は、明示的
+* Person オブジェクトに複数の識別プロパティを返却する能力がある LRS は、明示的
 にパーミッションを与えて、連結する資格情報が増加することを要求すべきである。
-・LRS は 403 "Forbidden" で、権限の不十分なリクエストを拒絶すべきである。
-・LRS がエージェントに関して返答すべき追加情報を持たない場合、照会時に Person
+* LRS は 403 "Forbidden" で、権限の不十分なリクエストを拒絶すべきである。
+* LRS がエージェントに関して返答すべき追加情報を持たない場合、照会時に Person
 を返さなければならないが、Person オブジェクトはリクエストされたエージェントと
 関連した情報のみを含む。
 
@@ -2819,9 +2819,18 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>objectType</td><td>String</td><td>"Person". 必須</td></tr>
-    <tr><td>name</td><td>Array of strings.</td><td>読み出しするエージェント名リスト</td>
-    <td>必須</td></tr>
+    <tr>
+        <td>objectType</td>
+        <td>String</td>
+        <td>"Person"</td>
+        <td>必須</td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Array of strings.</td>
+        <td>読み出しするエージェント名リスト</td>
+        <td>必須</td>
+    </tr>
     <tr>
         <td><a href="http://xmlns.com/foaf/spec/#term_mbox">mbox</a></td>
         <td>Array of IRIs in the form "mailto:email address".</td>
@@ -2831,7 +2840,7 @@ person 概念とは異なることに注意してほしい。ここでは person
     <tr>
         <td><a href="http://xmlns.com/foaf/spec/#term_mbox_sha1sum">mbox_sha1sum</a></td>
         <td>Array of strings.</td>
-        <td>mailto IRIs (例えば mbox プロパティなど).の SHA1 ハッシュリスト</td>
+        <td>mailto IRIs (例えば mbox プロパティなど) の SHA1 ハッシュリスト</td>
         <td>任意</td>
     </tr>
     <tr>
