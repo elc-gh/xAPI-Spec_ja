@@ -3256,13 +3256,10 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 
 <div style="page-break-after: always;"></div>
 <a name="AppendixB"/></a>
-## Appendix B: Example statement objects of different types 違うタイプのステートメントオブジェクトの例
-
-The object of a statement can be an activity, agent, group or statement.
-This appendix provides one example of each.
+## Appendix B: 違うタイプのステートメントオブジェクトの例
 
 ステートメントのオブジェクトは、アクティビティ、グループ、ステートメントになることができる。
-この付録は、それらのうちの一つの例を示す。
+この付録は、それぞれの例を示す。
 
 ###### Activity アクティビティ
 ```
@@ -3293,7 +3290,6 @@ This appendix provides one example of each.
 ```
 
 ###### Group グループ
-This example shows an identified group with members.
 
 この例は、メンバーを含む指名グループを示す。
 ```
@@ -3321,7 +3317,6 @@ This example shows an identified group with members.
 
 
 ###### Statement ステートメント
-This example shows a Sub-Statement object whose object is a Statement Reference.
 
 この例は、オブジェクトがステートメントリファレンスであるサブステートメントを示す。
 ```
