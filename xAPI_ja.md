@@ -515,7 +515,7 @@ LRS によりプロパティ（"id", "authority", "stored", "timestamp", "versio
     }
 }
 ```
-[Appendix A: ステートメントの例](#AppendixA) 参照
+[Appendix A: ステートメント例](#AppendixA) 参照
 
 
 <a name="stmtid"/></a>
@@ -3048,9 +3048,10 @@ LRS にアクセスするクライアントは、特定のステートメント�
 
 <div style="page-break-after: always;"></div>
 <a name="AppendixA"/></a>
-## Appendix A: Example statements ステートメント例
+## Appendix A: ステートメント例
 
-Example of a simple statement (line breaks are for display purposes only):簡単なステートメント例（改行は表示目的）
+簡単なステートメント例（改行は表示目的）
+
 ```
 {
     "id":"fd41c918-b88b-4b20-a0a5-a4c32391aaa0",
@@ -3080,7 +3081,8 @@ Example of a simple statement (line breaks are for display purposes only):簡単
     }
 }
 ```
-Typical simple completion with verb "attempted":Verbの「 attempted 」を用いた一般的で簡単な完了
+Verbの「 attempted 」を用いた一般的で簡単な完了
+
 ```
 {
     "actor":{
@@ -3114,10 +3116,9 @@ Typical simple completion with verb "attempted":Verbの「 attempted 」を用�
     }
 }
 ```
-A long example statement showcasing most of the properties available. This example shows
-a statement returned by an LRS including the authority and stored properties set by the LRS:
 
 利用できる大部分のプロパティを紹介している長いステートメント例。この例は、ステートメントが権限を含んでLRSによって戻され、LRSが設定したプロパティが記録されることを示す。
+
 ```
 {
     "id": "6690e6c9-3ef0-4ed3-8b37-7f3964730bee",
