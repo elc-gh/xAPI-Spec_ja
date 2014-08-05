@@ -726,16 +726,15 @@ xAPI ステートメント中の動詞は、学習経験中に行われた行動
 * ID に含まれる IRI は人間が理解できる形で、動詞の意味を示すべきである。
 
 ###### 例
+以下に、推奨項目を含む動詞の例を示す。
 
 ```
 {
-    "verb" : {
-        "id":"http://www.adlnet.gov/XAPIprofile/ran(travelled_a_distance)",
+    "id":"http://www.adlnet.gov/XAPIprofile/ran(travelled_a_distance)",
         "display":{
             "en-US":"ran",
-            "es" : "corrio"
+            "es" : "corrió"
         }
-    }
 }
 ```
 
@@ -1369,12 +1368,12 @@ __注記:__ この節は、ステートメントオブジェクトが持つ全�
 
 ```
 {
-    "parent" : [{
-    "id" : "http://example.adlnet.gov/xapi/example/test 1"
-    }],
-    "grouping" : [{
-    "id" : "http://example.adlnet.gov/xapi/example/Algebra1"
-    }]
+    "parent" : [
+         {"id" : "http://example.adlnet.gov/xapi/example/test1"}
+     ],
+     "grouping" : [
+         {"id" : "http://example.adlnet.gov/xapi/example/Algebra1"}
+     ]
 }
 
 ```
