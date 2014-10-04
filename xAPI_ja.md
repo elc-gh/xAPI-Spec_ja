@@ -212,6 +212,7 @@ OSD, Training Readiness & Strategy (TRS)
     <tr><td>Bill McDonald</td><td>Boeing</td></tr>
     <tr><td>Brian J. Miller</td><td>Rustici Software</td></tr>
     <tr><td>Chad Udell</td><td>Float Mobile Learning</td></tr>
+    <tr><td>Chris Handorf</td><td>Pearson</td></tr>
     <tr><td>Chris Sawwa</td><td>Meridian Knowledge Solutions</td></tr>
     <tr><td>Dan Allen</td><td>Litmos</td></tr>
     <tr><td>Dan Kuemmel</td><td>Sentry Insurance</td></tr>
@@ -289,6 +290,10 @@ xAPI の要求の収集において、多くの人々や組織から、SCORM®�
 ている。技術的な部分については、**必要条件**、**詳細**、または**例**という見出しをつ
 けている。
 
+大まかにいうと、文書が技術的に見えたり、要求仕様のようである場合は、そのように解釈さ
+れるべきである。特に、長く、より詳細な説明や表など、直感的でなく多くの要求について長
+い解説をしているところについて当てはまる。
+
 <div style="page-break-after: always;"></div>
 <a name="definitions"/></a>
 ## 3.0 用語の定義
@@ -298,6 +303,7 @@ xAPI の要求の収集において、多くの人々や組織から、SCORM®�
 * [アクタ (Actor)](#def-actor)
 * [認証 (Authentication)](#def-authentication)
 * [認可 (Authorization)](#def-authorization)
+* [ベースエンドポイント(Base Endpoint)](#def-baseendpoint)
 * [クライアント](#def-client)
 * [実践コミュニティ](#def-community-of-practice)
 * [Experience API (xAPI)](#def-experience-api)
@@ -346,6 +352,12 @@ __認証 (Authentication)__: ユーザやシステムのアイデンティティ
 __認可 (Authorization)__: ユーザやシステムの役割に応じ、何らかの利用
 許可を与えること。それはあるユーザやシステムを他者から信頼されるよ
 うにする過程である。
+
+<a name="def-baseendpoint" /></a>
+__ベースエンドポイント (Base Endpoint)__: 全ての xAPI エンドポイントに共通
+する最長のパスで、最後の / を含む。例：ステートメントエンドポイントとして
+http://example.com/xAPI/statements のベースエンドポイントは
+http://example.com/xAPI/ となる。
 
 <a name="def-client" /></a>
 __クライアント__: - LRS とやり取りしうる全ての物。クライアントはアクティ
@@ -875,7 +887,8 @@ xAPI における動詞は IRI であり、いかなる言語にも依存しな�
     <tr>
         <td>moreInfo</td>
         <td>IRL</td>
-        <td>アクティビティの「実施」の仕方を含むなど、アクティビティに関する人が読める文書を指し示すべきである。</td>
+        <td>
+        アクティビティについての人間が読むための情報をもつ文書を示す。文書には、アクティビティの実行の仕方を含めても良い。</td>
         <td>任意</td>
     </tr>
     <tr>
@@ -971,6 +984,17 @@ IRL からアクティビティ定義を解析することができ、そこか�
     </tr>
 </table>
 
+###### デリミタに関する注意
+SCORM 2004 第4版ランタイム環境は、文字列に関するなんらかの情報を伝える特定のデリミタを
+追加することを許可している。これは、該当文書のセクション 4.1.1.6 予約されたデリミタに概要
+が示され、RTE データモデル全体から参照されている。 これらのデリミタは SCORM 2004 第4版
+ランタイム環境のセクション 4.2.9.1 Correct Responses Pattern データモデル要素詳細に定義さ
+れているいくつかのインタラクションにおいて Correct Responses パターンの中で利用することが
+できる。
+
+セクション 4.1.1.6 と表 4.2.9.1 のデリミタの順序について一部矛盾がある。xAPI においては、4.2.9.1
+で示されるデリミタの順序を正しいものとする。
+
 ###### 必要条件
 
 * インタラクションアクティビティには、有効な interactionType が含まれていなければならない
@@ -1010,7 +1034,7 @@ IRL からアクティビティ定義を解析することができ、そこか�
     <tr><td>likert</td><td>scale</td></tr>
     <tr><td>matching</td><td>source, target</td></tr>
     <tr><td>performance</td><td>steps</td></tr>
-    <tr><td>true-false, fill-in, numeric, other</td><td>[No component lists defined]</td></tr>
+    <tr><td>true-false, fill-in, long-fill-in, numeric, other</td><td>[No component lists defined]</td></tr>
 </table>
 
 ###### 必要条件
@@ -2144,7 +2168,7 @@ PUT リクエストをいずれのヘッダもなく既存のリソースに対�
 
 LRS は次の手段のうち少なくとも一つを使用した認証をサポートしなければならない。
 
-- OAuth 1.0 （ RFC 5849 ） ( "HMAC-SHA1"、"RSA-SHA1" および "PLAIN TEXT" の署名方式を利用する）
+- [OAuth 1.0  (RFC 5849 ) ](http://tools.ieft.org/html/rfc5849) ( "HMAC-SHA1"、"RSA-SHA1" および "PLAIN TEXT" の署名方式を利用する）
 - HTTP　基本認証
 - Common Access Cards　（実装は今後のバージョンでフォローされ詳細化される）
 - LRS はステートメントの有効性に関して判断するか委任するかを決め、使用された証明書に
@@ -2273,7 +2297,7 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 
 ##### 必要条件
 
-* LRS は[OAuth 2.0](https://tools.ietf.org/html/draft-ietf-oauth-v2-22%22%20%5Cl%20%22section-3.3) で定義されたスコープパラメータを受入れなければならない。
+* LRS は[OAuth 2.0](http://tools.ietf.org/html/rfc6749#section-3.3) で定義されたスコープパラメータを受入れなければならない。
 * LRS はもしスコープが指定されていない場合は "statements/write" と "statements/read/mine" のリクエストスコープと仮定しなければならない。
 * LRS は最低限として "all" のスコープをサポートしなければならない。
 * LRS はその他のスコープをサポートしてもよい。
@@ -2284,7 +2308,9 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 ## 7.0 Data Transfer (REST)
 このセクションでは xAPI を構成する４つのサブ API （ステートメント、ステート、エージェント プロファイル、アクティビティ プロファイル）について説明する。4つのサブ API  は RESTful な HTTP メソッドによって処理される。ステートメント API は学習記録を追跡するために単独で利用することができる。
 
-__注:__この仕様書中のエンドポイントの例では、"http://example.com/xAPI/" を LRS のベース IRI の例としている。その後、他のすべての IRI の構文は、使用される特定のエンドポイントを示す。
+__注:__この仕様書中のエンドポイントの例では、"http://example.com/xAPI/" を LRS のベース
+エンドポイントの例としている。その後、他のすべての IRI の構文は、使用される特定のエンドポ
+イントを示す。
 
 ###### 必要条件
 
@@ -2385,9 +2411,9 @@ Experience API の基本的な通信手段である。
 
 LRS は格納されたステートメントが検索可能となる前に応答してもよい。
 
-* GET Statementsは、POSTやクエリ文字列として制限があるフォームフィールドを使用することと呼べる。
+* GET ステートメントは、必要に応じ、クエリーストリングスとしてフォームフィールドをもつ POST としても呼べるが制約がある。詳細は、[7.8 クロスオリジンリクエスト] (#78-cross-origin-requests) を参照のこと。
 
-* LRSは、ステートメントを追加したPOSTなのか、渡されたパラメータに基づいたステートメントリストなのか区別しなければならない。
+* LRSは、POST が、ステートメントの追加か、複数ステートメントのリストのどちらであるかを引き渡すパラメータによって弁別可能にしなければならない。詳細は、[7.8 クロスオリジンリクエスト] (#78-cross-origin-requests) を参照のこと。
 
 
 <a name="stmtapiget"/></a>
@@ -3410,6 +3436,20 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
     "interactionType": "fill-in",
     "correctResponsesPattern": [
         "Bob's your uncle"
+    ]
+}
+```
+
+###### long-fill-in
+```
+"definition": {
+    "description": {
+        "en-US": "What is the purpose of the xAPI?"
+    },
+    "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
+    "interactionType": "long-fill-in",
+    "correctResponsesPattern": [
+        "{case_matters=false}{lang=en}To store and provide access to learning experiences."
     ]
 }
 ```
