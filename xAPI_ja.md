@@ -2166,7 +2166,7 @@ PUT リクエストをいずれのヘッダもなく既存のリソースに対�
 
 LRS は次の手段のうち少なくとも一つを使用した認証をサポートしなければならない。
 
-- OAuth 1.0 （ RFC 5849 ） ( "HMAC-SHA1"、"RSA-SHA1" および "PLAIN TEXT" の署名方式を利用する）
+- [OAuth 1.0  (RFC 5849 ) ](http://tools.ieft.org/html/rfc5849) ( "HMAC-SHA1"、"RSA-SHA1" および "PLAIN TEXT" の署名方式を利用する）
 - HTTP　基本認証
 - Common Access Cards　（実装は今後のバージョンでフォローされ詳細化される）
 - LRS はステートメントの有効性に関して判断するか委任するかを決め、使用された証明書に
@@ -2295,7 +2295,7 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 
 ##### 必要条件
 
-* LRS は[OAuth 2.0](https://tools.ietf.org/html/draft-ietf-oauth-v2-22%22%20%5Cl%20%22section-3.3) で定義されたスコープパラメータを受入れなければならない。
+* LRS は[OAuth 2.0](http://tools.ietf.org/html/rfc6749#section-3.3) で定義されたスコープパラメータを受入れなければならない。
 * LRS はもしスコープが指定されていない場合は "statements/write" と "statements/read/mine" のリクエストスコープと仮定しなければならない。
 * LRS は最低限として "all" のスコープをサポートしなければならない。
 * LRS はその他のスコープをサポートしてもよい。
