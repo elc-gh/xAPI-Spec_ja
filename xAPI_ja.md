@@ -302,6 +302,7 @@ xAPI の要求の収集において、多くの人々や組織から、SCORM®�
 * [アクタ (Actor)](#def-actor)
 * [認証 (Authentication)](#def-authentication)
 * [認可 (Authorization)](#def-authorization)
+* [ベースエンドポイント(Base Endpoint)](#def-baseendpoint)
 * [クライアント](#def-client)
 * [実践コミュニティ](#def-community-of-practice)
 * [Experience API (xAPI)](#def-experience-api)
@@ -350,6 +351,12 @@ __認証 (Authentication)__: ユーザやシステムのアイデンティティ
 __認可 (Authorization)__: ユーザやシステムの役割に応じ、何らかの利用
 許可を与えること。それはあるユーザやシステムを他者から信頼されるよ
 うにする過程である。
+
+<a name="def-baseendpoint" /></a>
+__ベースエンドポイント (Base Endpoint)__: 全ての xAPI エンドポイントに共通
+する最長のパスで、最後の / を含む。例：ステートメントエンドポイントとして
+http://example.com/xAPI/statements のベースエンドポイントは
+http://example.com/xAPI/ となる。
 
 <a name="def-client" /></a>
 __クライアント__: - LRS とやり取りしうる全ての物。クライアントはアクティ
@@ -2299,7 +2306,9 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 ## 7.0 Data Transfer (REST)
 このセクションでは xAPI を構成する４つのサブ API （ステートメント、ステート、エージェント プロファイル、アクティビティ プロファイル）について説明する。4つのサブ API  は RESTful な HTTP メソッドによって処理される。ステートメント API は学習記録を追跡するために単独で利用することができる。
 
-__注:__この仕様書中のエンドポイントの例では、"http://example.com/xAPI/" を LRS のベース IRI の例としている。その後、他のすべての IRI の構文は、使用される特定のエンドポイントを示す。
+__注:__この仕様書中のエンドポイントの例では、"http://example.com/xAPI/" を LRS のベース
+エンドポイントの例としている。その後、他のすべての IRI の構文は、使用される特定のエンドポ
+イントを示す。
 
 ###### 必要条件
 
