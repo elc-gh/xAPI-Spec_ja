@@ -2837,7 +2837,7 @@ stateId によって指定される文書を記録、取り込み、又は削除
 指定されたエージェントに対して特別の、Person オブジェクトを返却する。Person
 オブジェクはエージェントオブジェクトと非常に似ているが、それぞれの要素が単一
 の値を持つ代わりに、それそれの要素が配列の値を持ち、複数の識別プロパティを
-含むことが許されている。ここで留意すべきは、引数が単一の識別子を持つ通常の
+含むことが許されている。ここで留意すべきは、パラメータが単一の識別子を持つ通常の
 エージェントオブジェクトであり、配列ではないということである。これは FOAF の
 person 概念とは異なることに注意してほしい。ここでは person は LRS エージェント
 データの person 中心の観点を示す存在として使用されるのであり、しかし、エー
@@ -2867,13 +2867,13 @@ person 概念とは異なることに注意してほしい。ここでは person
     <tr>
         <td>name</td>
         <td>Array of strings.</td>
-        <td>読み出しするエージェント名リスト</td>
+        <td>読み出されたエージェント名リスト</td>
         <td>必須</td>
     </tr>
     <tr>
         <td><a href="http://xmlns.com/foaf/spec/#term_mbox">mbox</a></td>
         <td>Array of IRIs in the form "mailto:email address".</td>
-        <td>読み出しするエージェントのｅメールアドレス リスト</td>
+        <td>読み出されたエージェントのｅメールアドレス リスト</td>
         <td>任意</td>
     </tr>
     <tr>
@@ -2885,7 +2885,7 @@ person 概念とは異なることに注意してほしい。ここでは person
     <tr>
         <td>openid*</td>
         <td>Array of strings.</td>
-        <td>読み出しするエージェントを一意的に識別する openid リスト</td>
+        <td>読み出されたエージェントを一意的に識別する openid リスト</td>
         <td>任意</td>
     </tr>
     <tr>
@@ -2898,7 +2898,7 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 参照:  Section 4.1.2.1 Agent.
 
-戻り値: ```200 OK```, Expanded Agent Object
+戻り値: ```200 OK```, Person Object
 
 
 <table>
