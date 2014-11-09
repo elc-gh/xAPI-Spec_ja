@@ -137,11 +137,24 @@ Project Tin Can API を提供した Rustici Software が、2012年4月のキッ�
 - ステートメント API の検索に関する変更。
 - 署名付きステートメントの追加。
 
+[0.95...1.0.0](https://github.com/adlnet/xAPI-Spec/compare/0.95-spec...1.0.0)
+
 ###### 1.0.0 から 1.0.1 (2013/10/01)
 以下を含む明確化と例示の追加。
 
 - 多くの typo の修正
 - 参考資料を追加
+
+[1.0.0...1.0.1](https://github.com/adlnet/xAPI-Spec/compare/1.0.0...1.0.1)
+
+###### 1.0.1 から 1.0.2 (2014/10/01)
+- 表に任意/必須を追加
+- インタラクションのコンポーネントにて抜けていた表のヘッダを追加
+- 添付資料の yes/no を必須/任意に変更
+- 'moreInfo' 要素の意図を明確化
+
+[1.0.1...1.0.2](https://github.com/adlnet/xAPI-Spec/compare/1.0.1...1.0.2)
+
 
 <div style="page-break-after: always;"></div>
 <a name="roleofxapi"/></a>
