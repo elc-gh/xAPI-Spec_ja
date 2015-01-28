@@ -2478,11 +2478,17 @@ LRS は格納されたステートメントが検索可能となる前に応答�
     <tr><td>registration</td><td>UUID</td><td> </td>
         <td>フィルタし、指定した registration id に一致するステートメントを返す。あるアクティビティに割り当てられるあるアクタに対して、一意の登録 ID が割り当てられることが多いが、それを前提とすべきでないことに注意が必要である。特定のアクタもしくはアクティビティのためのステートメントのみが返されるべき場合には、それらのパラメータもあわせて指定すべきである。</td><td>任意</td>
     </tr>
-    <tr><td>related_activities</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>related_activities</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>アクティビティ フィルタを広く適用する。オブジェクトや、あらゆる文脈のアクティビティ、もしくはパラメータ本来の正常な動作ではなく、アクティビティ パラメータにマッチするサブ ステートメントを含むプロパティをもつステートメントを含む。マッチングはアクティビティ パラメータと同様の方式で定義される。
         </td><td>任意</td>
     </tr>
-    <tr><td>related_agents</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>related_agents</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>エージェント フィルタを広く適用する。パラメータ本来の正常な動作ではなく、エージェント パラメータにマッチするアクタやオブジェクト、権限、インストラクタ、チームもしくはそれらのあらゆるプロパティをもつプロパティを含む。マッチングはエージェント パラメータと同様の方式で定義される。
         </td><td>任意</td>
     </tr>
@@ -2506,7 +2512,10 @@ LRS は格納されたステートメントが検索可能となる前に応答�
     <tr><td>attachments</td><td>Boolean</td><td>False</td>
         <td>trueの場合、LRS は以前に解説している通り、マルチパートレスポンスフォーマットを用いなければならず、あらゆる添付文書を含めなければならない。falseの場合には LRS はContent-Type application/json の形式で所定の応答を送信し、添付ファイルを使用することはできません。</td><td>任意</td>
     </tr>
-    <tr><td>ascending</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>ascending</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>true の場合、格納された時間の昇順で結果を返す。</td><td>任意</td>
     </tr>
 </table>
