@@ -2681,11 +2681,16 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>このステートと関連したアクティビティID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>このステートと関連したアクティビティID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
-        <td>このステートと関連したエージェント</td><td>必須</td>
+    <tr><td>agent</td>
+        <td>Agent object (JSON)</td>
+        <td>このステートと関連したエージェント</td>
+        <td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
         <td>このステートと関連した登録</td><td>任意</td>
@@ -2707,10 +2712,15 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>これらのステートと関連したアクティビティ ID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>これらのステートと関連したアクティビティ ID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>これらのステートと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
@@ -2731,11 +2741,17 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 戻り値: ```204 No Content```
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>このステートと関連したアクティビティ ID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>このステートと関連したアクティビティ ID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
-        <td>このステートと関連したエージェント</td><td>必須</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
+        <td>このステートと関連したエージェント</td>
+        <td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
         <td>このステートと関連した登録 ID</td><td>任意</td>
@@ -2770,7 +2786,9 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>ロードするアクティビティと関連したアクティビティ ID</td><td>必須</td>
     </td>
 </table>
@@ -2785,7 +2803,9 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 戻り値 (GET): ```200 OK```, Profile Content
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>このプロファイルと関連したアクティビティ ID</td><td>必須</td>
     </tr>
     <tr><td>profileId</td><td>String</td>
@@ -2804,7 +2824,9 @@ stateId によって指定される文書を記録、変更、取り込み、ま
 戻り値: ```200 OK```, List of ids
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th><tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>これらのプロファイルと関連したアクティビティ ID</td><td>必須</td>
     </tr>
     <tr><td>since</td><td>Timestamp</td>
@@ -2905,7 +2927,9 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>拡張されたエージェント情報を取り込む際に使用するエージェント表現</td><td>必須</td>
     </tr>
 </table>
@@ -2926,7 +2950,9 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>このプロファイルと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>profileId</td><td>String</td>
@@ -2945,7 +2971,9 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>このプロファイルと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>since</td><td>Timestamp</td>
