@@ -494,8 +494,8 @@ __動詞 (Verb)__: ステートメント中のアクティビティにおける�
     <td>このステートメントが記録された時刻を示すタイムスタンプ（<a href="https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations">ISO 8601</a> 形式に従う）。LRS によって設定される。
     </td><td>LRS による設定</td></tr>
     <tr><td><a href="#authority">authority</a></td><td>Object</td>
-    <td>このステートメントが正しいものであると主張する Agent を示す。LRS の認証機構により確認され、指定がない場合は LRS によって設定される。
-    </td><td>任意</td></tr>
+    <td>このステートメントが正しいものであると主張する Agent または Group を示す。LRS の認証機構により確認され、指定がない場合は LRS によって設定される。</td>
+    <td>任意</td></tr>
     <tr><td><a href="#version">version</a></td><td>Version</td>
     <td><a href="http://semver.org/spec/v1.0.0.html">セマンティックバージョニング 1.0.0</a> 形式で示したステートメントの xAPI バージョン。
     </td><td>非推奨</td></tr>
