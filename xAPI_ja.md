@@ -2674,7 +2674,7 @@ DELETE はその他のパラメータを通じて与えられた文脈の全て�
 エンドポイント例: http://example.com/xAPI/activities/state
 
 アクティビティ、エージェント、そして登録（存在すれば）からなる文脈に与えられた
-stateId によって指定される文書を記録、取り込み、又は削除する。
+stateId によって指定される文書を記録、変更、取り込み、または削除する。
 
 戻り値: (PUT | POST | DELETE): ```204 No Content```<br>
 戻り値: (GET): ```200 OK```, State Content
@@ -2779,7 +2779,7 @@ stateId によって指定される文書を記録、取り込み、又は削除
 
 エンドポイント例: http://example.com/xAPI/activities/profile
 
-指定されたアクティビティの文脈で特定のプロファイル文書を保存 / 読み出し / 削除する。
+指定されたアクティビティの文脈で特定のプロファイル文書を記録、変更、取り込み、または削除する。
 
 戻り値 (PUT | POST | DELETE): ```204 No Content```<br>
 戻り値 (GET): ```200 OK```, Profile Content
@@ -2919,7 +2919,7 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 エンドポイント例: http://example.com/xAPI/agents/profile
 
-指定されたエージェントの文脈で特定のプロファイル文書を保存/読み出し/削除する。
+指定されたエージェントの文脈で特定のプロファイル文書を記録、変更、取り込み、または削除する。
 
 戻り値 (PUT | POST | DELETE): ```204 No Content```
 戻り値 (GET): ```200 OK```, Profile Content
