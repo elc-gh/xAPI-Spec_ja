@@ -2127,21 +2127,25 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 ### 6.3 同時実行
 
 ##### 説明
-同時実行制御は API 利用者が LRS に古いデータに基づく変更を PUT または POST しないことを確実にする。
+同時実行制御は API 利用者が LRS に古いデータに基づく変更を PUT、POST または DELETE しないことを確実にする。
 
 ##### 詳細
-xAPI は、 PUT または POST が既存のデータ実体を上書きする API の一部において、楽観的な同時実行制御を実装するために、 HTTP1.1 エンティティタグ（ [ETags](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19) ）を使用する予定である。その部分は次の通り。
+xAPI は、 PUT、POST または DELETE が既存のデータ実体を上書きまたは削除する API の一部において、楽観的な同時実行制御を実装するために、 HTTP1.1 エンティティタグ（ [ETags](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19) ）を使用する予定である。その部分は次の通り。
 
 * State API
 * Agent Profile API
 * Activity Profile API
 
-状態の矛盾がほとんど発生しないことから、 ステート API は同時実行ヘッダなしの PUT または POST リクエストを許容する。
+状態の矛盾がほとんど発生しないことから、 ステート API は同時実行ヘッダなしの PUT、POST または DELETE リクエストを許容する。
 以下の必要条件は、 エージェントプロファイル API とアクティビティプロファイル API にのみ適用される。
 
 ##### クライアントの必要条件
+* Agent Profile API または Activity Profile API に PUT リクエストを投げるクライアントは [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダ、または [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含まなければならない。
 
-* Agent Profile API または Activity Profile API を使用するクライアントは [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダ、または [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含まなければならない。
+* Agent Profile API または Activity Profile API に POST リクエストを投げるクライアントは、[If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24)ヘッダ、または[If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含むべきである。
+
+* Agent Profile API または Activity Profile API に DELETE リクエストを投げるクライアントは、[If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24)ヘッダを含むべきである。
+
 
 ##### LRS に対する必要条件
 
@@ -2151,7 +2155,7 @@ xAPI は、 PUT または POST が既存のデータ実体を上書きする API
 
 * LRS が PUT リクエストに応答する際には、RFC2616 (HTTP 1.1) にて説明されるとおり、 If-Match ヘッダが ETag を含む場合は、利用者が文書を最後に取り込んだあとに修正が行われたか検出するために [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダを取り扱わなければならない。
 * LRS が PUT リクエストに応答する際には、RFC2616 （"*" を含む場合は HTTP1.1 ）で定める [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを、利用者が気づかないリソース提供があるときに検出するために取り扱わなければならない。
-* POST リクエストに返答する LRS は、ETag が含まれる場合、サービス利用者が先の取り込み時点からの変更を検出できるように、RFC2616, HTTP 1.1 に示される通り [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダを処理すべきである。
+* POST または DELETE リクエストに返答する LRS は、ETag が含まれる場合、サービス利用者が先の取り込み時点からの変更を検出できるように、RFC2616, HTTP 1.1 に示される通り [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダを処理すべきである。
 
 * POST リクエストに返答する LRS は、"*" が含まれる場合、サービス利用者が気付かないリソースが存在するかを検出するために、RFC2616, HTTP 1.1 に示される通り [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを処理すべきである。
 
@@ -2160,7 +2164,7 @@ xAPI は、 PUT または POST が既存のデータ実体を上書きする API
 * HTTP status 412 "Precondition Failed" を返さなければならない。
 * リソースを変更させてはならない。
 
-上記にあげた POST リクエストのヘッダの前提条件が満たされなかった場合、LRS は
+上記にあげた POST または DELETE リクエストのヘッダの前提条件が満たされなかった場合、LRS は
 
 * HTTP 412 "Precondition Failed" を返すべきである
 * リソースに対して変更を加えるべきではない
