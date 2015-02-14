@@ -556,7 +556,7 @@ LRS によりプロパティ（"id", "authority", "stored", "timestamp", "versio
 #### 4.1.1 id (識別子)
 
 ###### 説明
-UUID（仕様は [RFC 4122](http://www.ieft.org/rfc/rfc4122.txt) 参照。UUID は標準的な文字列形式でなければならない）
+UUID ([RFC 4122](http://www.ieft.org/rfc/rfc4122.txt)のvariant 2の全てのバージョン)は有効であり、UUIDは標準的な文字列形式でなければならない)
 
 ###### 必要条件
 
