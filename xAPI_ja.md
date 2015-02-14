@@ -399,6 +399,15 @@ __IRI (Internationalized Resource Identifiers)__: IRL でありうる一意な�
 ある。相対 IRI は使われるべきではない。 IRL は IRL を作る者がコントロー
 ルするドメインの中で、定義されるべきである。
 
+__IRI (Internationalized Resource Identifiers)__: 一意な識別子で、
+IRL であることもある。動詞、アクティビティ、またはアクティビティタイプな
+どの目的語を特定するために使われる。URI とは異なり、IRI は各国の言語をサ
+ポートするために、ASCII キャラクタ以外を利用することが出来る。
+
+IRI は常にスキーマを含む。これは、本標準による要求ではないが、[RFC 3987]
+(http://www.ietf.org/rfc/rfc3987.txt)に示される IRI の定義による。いわ
+ゆる '相対 IRI' は、IRI ではない。
+
 <a name="def-irl" /></a>
 __Internationalized Resource Locator (IRL)__: この仕様書において、URL
 を URI と読み替え可能な時、 IRL は IRI と読み替えられる。(URI と読み替
@@ -2036,6 +2045,7 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 
 * 識別子に対してメタデータが提供されても良い
 * メタデータが提供される場合、名前と説明の両方が含まれるべきである
+* IRL は、IRL を作成した人物が管理するドメインにおいて定義されるべきである
 * 上記、識別子としての IRI において、もし、IRI が本仕様によって作られた IRL であるな
 ら、その IRL の管理者は、その IRL が "Content-Type: application/json" がリクエストさ
 れた際に、この JSON メタデータを IRL の場所において利用可能にすべきである。
