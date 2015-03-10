@@ -399,6 +399,15 @@ __IRI (Internationalized Resource Identifiers)__: IRL でありうる一意な�
 ある。相対 IRI は使われるべきではない。 IRL は IRL を作る者がコントロー
 ルするドメインの中で、定義されるべきである。
 
+__IRI (Internationalized Resource Identifiers)__: 一意な識別子で、
+IRL であることもある。動詞、アクティビティ、またはアクティビティタイプな
+どの目的語を特定するために使われる。URI とは異なり、IRI は各国の言語をサ
+ポートするために、ASCII キャラクタ以外を利用することが出来る。
+
+IRI は常にスキーマを含む。これは、本標準による要求ではないが、[RFC 3987]
+(http://www.ietf.org/rfc/rfc3987.txt)に示される IRI の定義による。いわ
+ゆる '相対 IRI' は、IRI ではない。
+
 <a name="def-irl" /></a>
 __Internationalized Resource Locator (IRL)__: この仕様書において、URL
 を URI と読み替え可能な時、 IRL は IRI と読み替えられる。(URI と読み替
@@ -494,8 +503,8 @@ __動詞 (Verb)__: ステートメント中のアクティビティにおける�
     <td>このステートメントが記録された時刻を示すタイムスタンプ（<a href="https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations">ISO 8601</a> 形式に従う）。LRS によって設定される。
     </td><td>LRS による設定</td></tr>
     <tr><td><a href="#authority">authority</a></td><td>Object</td>
-    <td>このステートメントが正しいものであると主張する Agent を示す。LRS の認証機構により確認され、指定がない場合は LRS によって設定される。
-    </td><td>任意</td></tr>
+    <td>このステートメントが正しいものであると主張する Agent または Group を示す。LRS の認証機構により確認される。提供されない場合は、または送信者とLRSの間の強い信頼関係が構築されていない場合は、LRSによって設定される。</td>
+    <td>任意</td></tr>
     <tr><td><a href="#version">version</a></td><td>Version</td>
     <td><a href="http://semver.org/spec/v1.0.0.html">セマンティックバージョニング 1.0.0</a> 形式で示したステートメントの xAPI バージョン。
     </td><td>非推奨</td></tr>
@@ -547,7 +556,7 @@ LRS によりプロパティ（"id", "authority", "stored", "timestamp", "versio
 #### 4.1.1 id (識別子)
 
 ###### 説明
-UUID（仕様は [RFC 4122](http://www.ieft.org/rfc/rfc4122.txt) 参照。UUID は標準的な文字列形式でなければならない）
+UUID ([RFC 4122](http://www.ieft.org/rfc/rfc4122.txt)のvariant 2の全てのバージョン)は有効であり、UUIDは標準的な文字列形式でなければならない)
 
 ###### 必要条件
 
@@ -620,7 +629,8 @@ Group は Agent の集合を意味し、Agent を指定できる状況の大部�
 ###### 必要条件
 
 * ステートメントを利用するシステムは、複数の匿名グループが同じメンバーで構成されている場合においても、それらを異なるものとして扱わなければならない。
-* ステートメントを利用するシステムは、'member' プロパティに示された Agent が、与えられた匿名または指名のグループに属する Agent の厳密なリストであるとみなしてはならない。
+* アクティビティプロバイダは、グループに関する、複数のステートメントの発行、データの集約、または文書の登録や取出をする場合は、指名グループを使うべきである。
+* アクティビティプロバイダは、匿名や指名グループの'member'要素に、全てあるいは一部分のエージェントのリストを入れても良い。
 
 ###### 匿名グループに関する必要条件
 
@@ -967,7 +977,10 @@ IRL からアクティビティ定義を解析することができ、そこか�
 それらの実情と構造を xAPI にも拡張するために、本仕様では SCORM 2004 第4版の
 データモデルを参考にしたインタラクションの定義を含んでいる。これらの定義はインタ
 ラクションのデータを記録するためのシンプルで使い慣れた仕組みを提供することを目
-的としている。これらの定義はシンプルで使いやすいが、制約もある。より高機能なイン
+的としている。1.0.3 より、SCORM データモデルに対する直接の参照は削除し始めており、
+関連する要求は本文書に直接記述されている。
+
+これらのインタラクション定義はシンプルで使いやすいが、制約もある。より高機能なイン
 タラクションの定義が必要な実践コミュニティは、アクティビティのタイプと定義の拡張を
 利用することによりそれを実現できる。
 
@@ -980,33 +993,158 @@ IRL からアクティビティ定義を解析することができ、そこか�
     <tr>
         <td>interactionType</td>
         <td>String</td>
-        <td>SCORM2004 4th 版のRun-Time Environmentで定義している"cmi.interactions.n.type"</td>
+        <td>インタラクションのタイプ。取りうる値は "true-false", "choice", "fill-in", "long-fill-in", “matching”, “performance”, “sequencing”, “likert”, “numeric” または “other” である。</td>
         <td>任意</td>
     </tr>
     <tr>
         <td>correctResponsesPattern</td>
         <td>An array of strings</td>
-        <td>SCORM2004 4th 版の Run-Time Environment で定義している" cmi.interactions.n.correct_responses.n.pattern "に対応し、最後の n は配列のインデックスとなる</td>
+        <td>インタラクションに対する正しいレスポンスを示すパターン。このパターンの構造は interactionType に依存する。下記に詳細を示す。</td>
         <td>任意</td>
     </tr>
     <tr>
         <td>choices | scale | source | target | steps</td>
         <td>Array of interaction components</td>
-        <td>interactionType (後述参照)にて特定</td>
+        <td>与えられた instructionType (<a href="#interactionComponentLists">以下参照</a>)による</td>
         <td>任意</td>
     </tr>
 </table>
 
-###### デリミタに関する注意
-SCORM 2004 第4版ランタイム環境は、文字列に関するなんらかの情報を伝える特定のデリミタを
-追加することを許可している。これは、該当文書のセクション 4.1.1.6 予約されたデリミタに概要
-が示され、RTE データモデル全体から参照されている。 これらのデリミタは SCORM 2004 第4版
-ランタイム環境のセクション 4.2.9.1 Correct Responses Pattern データモデル要素詳細に定義さ
-れているいくつかのインタラクションにおいて Correct Responses パターンの中で利用することが
-できる。
+###### インタラクションタイプ
+以下の表では各 interactionType で示されるインタラクションの種類について説明する。
+これらのインタラクションのタイプは、SCORM 2004 第４版ランタイム環境の
+"cmi.interactions.n.type" にて許されるインタラクションのタイプに基づいている。
+各インタラクションタイプについては、[Appendix C](#AppendixC)を参照のこと。
 
-セクション 4.1.1.6 と表 4.2.9.1 のデリミタの順序について一部矛盾がある。xAPI においては、4.2.9.1
-で示されるデリミタの順序を正しいものとする。
+<table>
+    <tr><th>intractionType</th><th>説明</th></tr>
+    <tr>
+        <td>true-false</td>
+        <td>次の二値を取るインタラクション: true または false</td>
+    </tr>
+    <tr>
+        <td>choice</td>
+        <td>学習者が選択できる複数の選択肢をもつインタラクション。学習者がリストから単一の答えを選択できるインタラクションと、複数の要素を選択できるものを含む。</td>
+    </tr>
+    <tr>
+        <td>fill-in</td>
+        <td>学習者が１つ以上の短い文字列を回答することを要求するインタラクション。典型的には、語の一部や、少数の文字列が回答となる。「短い」とは正解や回答者の回答文字列が、250文字程度以内であることを意味する。</td>
+    </tr>
+    <tr>
+        <td>long-fill-in</td>
+        <td>学習者が長い文章の形式で回答することを要求するインタラクション。「長い」とは正解や回答者の回答文章が、250文字を超える程度であることを意味する。
+        </td>
+    </tr>
+    <tr>
+        <td>matching</td>
+        <td>An interaction where the learner must match items in one set (the source set) to items in another set (the target set).
+            Items do not have to pair off exactly and it's possible for multiple or zero source items to be matched to a given target and vice versa.</td>
+    </tr>
+    <tr>
+        <td>performance</td>
+        <td>学習者が複数のステップからなるタスクを実行することを要求するインタラクション。</td>
+    </tr>
+    <tr>
+        <td>sequencing</td>
+        <td>学習者がある要素群の順序を並べ替えるインタラクション。</td>
+    </tr>
+    <tr>
+        <td>likert</td>
+        <td>学習者がある尺度上の離散的な値を選択することを求めるインタラクション。</td>
+    </tr>
+    <tr>
+        <td>numeric</td>
+        <td>学習者が数値で回答することを要求するインタラクション。</td>
+    </tr>
+    <tr>
+        <td>other</td>
+        <td>上記の定義に当てはまらないタイプのインタラクション。</td>
+    </tr>
+</table>
+
+###### 返答パターン
+以下の表では、各インタラクションタイプの correctResponsesPattern 要素の文字列フォーマットを示す。このフォーマットは、要求オブジェクト中の学習者の返答を示すためにも用いられる。
+これらのインタラクションのタイプは、SCORM 2004 第４版ランタイム環境の
+"cmi.interactions.n.type" にて許されるインタラクションのタイプに基づいている。
+各インタラクションタイプについては、[Appendix C](#AppendixC)を参照のこと。
+Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
+
+<table>
+    <tr><th>intractionType</th><th>フォーマット</th></tr>
+    <tr>
+        <td>true-false</td>
+        <td><code>true</code> または <code>false</code> のいずれか</td>
+    </tr>
+    <tr>
+        <td>choice</td>
+        <td><code>[,]</code> によって区切られる要素のリスト。もし返答に要素が１つしか含まれない場合は、区切り文字を使ってはならない。</td>
+    </tr>
+    <tr>
+        <td>fill-in と long-fill-in</td>
+        <td><code>[,]</code> によって区切られる返答のリスト。もし返答に要素が１つしか含まれない場合は、区切り文字を使ってはならない。</td>
+    </tr>
+    <tr>
+        <td>matching</td>
+        <td>マッチするペアのリストで、それぞれのペアは連携元の要素 ID に続いて、連携先の要素 ID をもつ。要素としては（０を含む）複数のペアが存在することができる。ペアの中の要素は、<code>[.]</code>によって区切られる。それぞれのペアは <code>[,]</code>によって区切られる。
+        </td>
+    </tr>
+    <tr>
+        <td>performance</td>
+        <td>ステップ ID とそのステップに対する返答を含むステップのリスト。ステップ ID は返答と <code>[.]</code> によって区切られる。各ステップは <code>[,]</code> によって区切られる。
+        fill-in インタラクションにおける文字列や数値インタラクションの数値範囲のような形をとること賀できる。
+        </td>
+    </tr>
+    <tr>
+        <td>sequencing</td>
+        <td><code>[,]</code> によって区切られる要素 ID を順位づけしたリスト。</td>
+    </tr>
+    <tr>
+        <td>likert</td>
+        <td>単一の要素 ID</td>
+    </tr>
+    <tr>
+        <td>numeric</td>
+        <td><code>:</code> で区切られた最小値と最大値によって示される数値範囲。</td>
+    </tr>
+    <tr>
+        <td>other</td>
+        <td>このタイプのインタラクションにおいては、いかなるフォーマットも有効である。</td>
+    </tr>
+</table>
+
+###### 文字列パラメータ
+上に示した返答に含まれるいくつかの値には、追加のパラメータを付与することができる。これらは SCORM 2004 第４版ランタイム環境によって定義された区切り文字列を元にしている。これらのパラメータは ```{parameter=value}``` の形式によって表現される。[Appendix C の long-fill-in の例] (#long-fill-in) を参照。
+
+以下のパラメータはリスト型のインタラクションタイプの要素のリストを定義する文字列の先頭において有効である。
+
+<table>
+    <tr><th>パラメータ</th><th>説明</th><th>値</th><th>インタラクションタイプ</th></tr>
+    <tr>
+        <td>case_matters</td>
+        <td>リスト中の要素の大文字小文字の別が参酌されるか</td>
+        <td><code>true</code> または <code>false</code></td>
+        <td>fill-in, long-fill-in</td>
+    </tr>
+    <tr>
+        <td>order_matters</td>
+        <td>リスト中の要素の順序が参酌されるか</td>
+        <td><code>true</code> または <code>false</code></td>
+        <td>fill-in, long-fill-in, performance</td>
+    </tr>
+</table>
+
+以下のパラメータはリスト型のインタラクションタイプの要素リストの先頭において有効である。
+
+<table>
+    <tr><th>パラメータ</th><th>説明</th><th>値</th><th>インタラクションタイプ</th></tr>
+    <tr>
+        <td><code>lang</code></td>
+        <td>要素で用いられる言語</td>
+        <td><a href="http://tools.ietf.org/html/rfc5646">RFC 5646 言語タグ</a></td>
+        <td>fill-in, long-fill-in, performance (文字列返答のみ)</td>
+    </tr>
+</table>
+
 
 ###### 必要条件
 
@@ -1015,6 +1153,9 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
 * 有効な interactionType を受信した場合、 LRS は残りのプロパティを下記の表に沿っ
 て確認し、もし残りのプロパティがインタラクションアクティビティに対して有効でない場合
 は、HTTP 400 "Bad Request" を返してもよい。
+* LRS は返答パターンに関して文字数制限をかけるべきではない。
+* LRS はいずれの interactionType の correctResponsesPatterns 配列の長さに制限をかけるべきではない。
+
 
 ##### インタラクションのコンポーネント
 
@@ -1037,17 +1178,23 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
     </tr>
 </table>
 
-<a name="interactionType"/></a>
-インタラクションアクティビティにおける interactionType でサポートしている CMI インタ
-ラクションコンポーネントは以下の表の通り。
+<a name="interactionComponentLists"/></a>
+インタラクションタイプに応じて、インタラクションアクティビティは、それぞれにインタラクション要素を含む追加のプロパティをとっても良い。これらの追加のプロパティは "interaction component lists" と呼ばれる。次の表は、与えられた interactionType のインタラクションアクティビティで利用可能なインタラクションコンポーネントリストを示す。
+
 
 <table>
-    <tr><th>インタラクションタイプ</th><th>サポートしているコンポーネントのリスト</th><tr>
-    <tr><td>choice, sequencing</td><td>choices</td></tr>
-    <tr><td>likert</td><td>scale</td></tr>
-    <tr><td>matching</td><td>source, target</td></tr>
-    <tr><td>performance</td><td>steps</td></tr>
-    <tr><td>true-false, fill-in, long-fill-in, numeric, other</td><td>[No component lists defined]</td></tr>
+    <tr><th>interactionType</th><th>サポートされるインタラクションコンポーネントリスト</th><th>Description</th><tr>
+    <tr><td>choice, sequencing</td><td>choices</td>
+    <td>選択や順序づけのインタラクションで利用できるオプションのリスト。</td>
+    </tr>
+    <tr><td>likert</td><td>scale</td>
+    <td>リッカートスケールに対するオプションのリスト</td></tr>
+    <tr><td>matching</td><td>source, target</td>
+    <td>マッチさせるべき連携元と連携先のリスト</td></tr>
+    <tr><td>performance</td><td>steps</td>
+    <td>パフォーマンスインタラクションを形成する要素のリスト</td></tr>
+    <tr><td>true-false, fill-in, long-fill-in, numeric, other</td><td>[No component lists defined]</td><td></td></tr>
+
 </table>
 
 ###### 必要条件
@@ -1235,12 +1382,36 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
 
 <table border ="1">
     <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>scaled</td><td>-1から1までの十進数</td><td>CORM2004 4th 版の 'cmi.score.scaled' を参照</td><td>推奨</td></tr>
-    <tr><td>raw</td><td>min と max の間の十進数  'cmi.score.raw'を参照
-    （現状、そうでなければ無制限）</td><td>'cmi.score.raw' を参照</td><td>任意</td></tr>
-    <tr><td>min</td><td>maxよりも小さい十進数 </td><td>'cmi.score.min' を参照</td><td>任意</td></tr>
-    <tr><td>max</td><td>minよりも大きい十進数 </td><td>'cmi.score.max' を参照</td><td>任意</td></tr>
+    <tr>
+      <td>scaled</td>
+      <td>-1から1までの小数</td>
+      <td>ある経験において取りうる最高点に対する割合で示した、有る経験に対するスコア。負のスコアの場合には、とりうる最低点に対する割合として計算される。正のスコアの場合、スコアは、素点を最高点で割ったものとして計算される（それらの数値が有る場合〕。
+      </td>
+
+      <td>推奨</td>
+    </tr>
+    <tr>
+      <td>raw</td>
+      <td>min と max の間の小数 'cmi.score.raw'を参照（現状、そうでなければ無制限）</td>
+    　<td>ステートメントで表現されている経験について、アクタが達成したスコア。この数値はスケーリングや平準化によって補正されていないものである。</td>
+
+      <td>任意</td>
+    </tr>
+    <tr>
+      <td>min</td>
+      <td>maxよりも小さい小数 </td>
+    　<td>ステートメントで表現されている経験についての最も低いスコア。</td>
+      <td>任意</td>
+    </tr>
+    <tr>
+      <td>max</td>
+      <td>minよりも大きい小数</td>
+      <td>ステートメントで表現されている経験についての最も高いスコア。</td>
+      <td>任意</td>
+    </tr>
 </table>
+
+スコアオブジェクトのプロパティは SCORM 2004 第４版で定義されている cmi.score の関連するプロパティに基づいてる。
 
 ###### 必要条件
 
@@ -1439,6 +1610,7 @@ __注記:__ この節は、ステートメントオブジェクトが持つ全�
 * timestamp は経験が発生した期間の中での任意の時点を指してよい。
 * timestamp は、秒を少なくとも3桁の精度で切り捨てられるか、あるいは丸められてもよい(ミリ秒の精度は保たれなければならない)。
 * timestamp は、それがサブ・ステートメントに含まれるならば、計画した学習の期限を示すために未来の時刻としてもよい。
+* 指定されない場合、LRSによって[Stored](#stored)の値が設定されるべきである。
 
 <a name="stored"/></a>
 #### 4.1.8 Stored
@@ -1763,8 +1935,14 @@ IRI の完全な検証は非常に難しいため、データの可搬性を担�
 下の表はステートメント API の検索結果のためのデータ構造を示している。
 <table>
     <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>statements</td><td>Array of Statements</td>
+    <tr>
+        <td>statements</td>
+        <td>Array of Statements</td>
         <td>ステートメントのリスト。さらに結果があるのに，戻ってきたリストが（ページ制限により）制限されていたら，コンテイナに含まれる "statements" プロパティに配置されるだろう。コンテイナは，ステートメント結果オブジェクトのさらなる要素によって提供される IRL に置かれる。
+
+        ステートメントのリスト。（ページ区切りにより）戻されるリストが一部に制限されており、リストの続きがある場合、それらは結果の Statement オブジェクトの "more" 要素によって提供される IRL に存在するコンテナの "statements" プロパティに配置される。
+
+        合致するステートメントがない場合は、このプロパティは空の配列をもつ。
         </td>
         <td>必須</td>
     </tr>
@@ -1783,6 +1961,13 @@ IRI の完全な検証は非常に難しいため、データの可搬性を担�
 * more プロパティから取り出された IRL は、LRSによって戻された後、少なくとも24時間は利用可能でなければならない。
 * LRSは、クエリが、IRL と関連するクエリデータを保存する必要性を避け続けるために、more プロパティの IRL 中に全ての必要な情報を含めても良い。
 * LRSは more プロパティの中では、非常に長い IRL の生成は避けるべきである。
+* LRS は、オリジナルのクエリが実行された時のバッチに含まれるたであろう、more プロパティ内の IRL がアクセスされたときに、クエリを再実行しても良い。その際に、
+後に無効化されたステートメントを除外しても良い。
+* または、LRS はオリジナルのクエリが実行されたときに返されるべきステートメント
+と一致するように、more プロパティで返されるステートメントのリストをキャッシュ
+しておいても良い。
+* その場合、LRS はキャッシュされたステートメントのリストから、無効化されたステ
+ートメントを削除しても良い。
 * 利用者は more プロパティから返ってくる IRL の戻り値から意味を解釈すべきではない。
 
 <a name="voided"/></a>
@@ -1799,7 +1984,9 @@ IRI の完全な検証は非常に難しいため、データの可搬性を担�
 
 * 他のステートメントを無効化するステートメントを発行するときは、無効化ステートメントの目的語は "objectType" フィールドを "StatementRef" に設定しなければならない
 * 他のステートメントを無効化するステートメントを発行するとき、無効化ステートメントの目的語では、無効化すべきステートメントの ID を ID フィールドで指定しなければならない。
+* LRS は、ステートメントその物が無効化ステートメントではなく、LRS がはじめのステートメントに対する無効化ステートメントを含む場合にのみステートメントを評価しなければならない。
 * 他のステートメントを無効化するステートメントを受け取ったとき、LRS は、その要求がステートメントの無効化を認められたソースからの要求でない場合は、HTTP 403 'Forbidden' にて、無効化ステートメントを含むリクエスト全体を拒否すべきである。
+* 他のステートメントを無効化するステートメントを受け取った場合、LRS は、無効化されるべきステートメントの Object が存在しないことを理由に、要求を拒絶するべきではない。
 * 他のステートメントを無効化するステートメントを受け取ったとき、LRS は無効化されたステートメントによって、もともと導入されたアクティビティやエージェントの定義に対する変更をロールバックしてもよい。
 * 以前の無効ステートメントを有効化するアクティビティプロバイダは新しい id で再度ステートメントを発行すべきである。
 * レポートシステムは無効化された、または無効化するためのステートメントを標準では表示すべきではない。
@@ -1945,6 +2132,11 @@ Arbitrary binary data
 で指定された言語で記述された文字列を値とする辞書である。このマップは、その対象となる
 異なる言語において、その文字列の知識が及ぶ限り出来るだけ充実させるべきである。
 
+言語マップ内のコンテンツの文字列は単純なテキストである。HTML タグや Markdown などの
+フォーマット方式は処理されないと想定し、エンドユーザに提示されるときは、コードのまま
+表示される。言語マップオブジェクトが拡張の中で利用され、拡張 IRI の所有者が表示のた
+めに特定の方式が利用されると明示する場合は例外である。
+
 <a name="miscext"/></a>
 ### 5.3 拡張
 
@@ -2012,19 +2204,21 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 </table>
 
 メタデータが上記のように提供される場合、それは識別子が示す情報についての標準的な情
-報源となる。<a href="#verb-lists-and-repositories">動詞について言えば</a>、
-アクティビティ ID 以外に関し、すべてのタイプの IRI 識別子に、確立され広く認められ
-ている識別子を利用することをアクティビティプロバイダに対して推奨する。
+報源となる。アクティビティ ID 以外に関し、すべてのタイプの IRI 識別子に、確立さ
+れ広く認められている識別子を利用することをアクティビティプロバイダに対して推奨
+する。
 
 ##### 必要条件
 
 * 識別子に対してメタデータが提供されても良い
 * メタデータが提供される場合、名前と説明の両方が含まれるべきである
+* IRL は、IRL を作成した人物が管理するドメインにおいて定義されるべきである
 * 上記、識別子としての IRI において、もし、IRI が本仕様によって作られた IRL であるな
 ら、その IRL の管理者は、その IRL が "Content-Type: application/json" がリクエストさ
 れた際に、この JSON メタデータを IRL の場所において利用可能にすべきである。
 * 識別子が既に存在する場合、アクティビティプロバイダは既存の関連する識別子を利用すべきである
-* アクティビティプロバイダは、適切な既存識別子が存在しない場合、独自の動詞を作成、利用しても良い。
+* アクティビティプロバイダは、適切な既存識別子が存在しない場合、独自の識別子を作成、利用しても良い。
+* 識別子を定義する場合、アクティビティプロバイダは１ページが複数の識別子の定義を含むことが出来るように、アンカーを含む URI 群を利用しても良い。例：http://example.com/xapi/verbs#defenestrated
 * 翻訳等不足する詳細情報を埋めるために、あるいは提供されていなかったり読み込め
 ない場合は、このメタデータを完全に置き換えるために、他の情報源を使ってもよい。特
 にその識別子が本仕様で利用する目的で作成されなかった場合においては、このメタデ
@@ -2100,21 +2294,25 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 ### 6.3 同時実行
 
 ##### 説明
-同時実行制御は API 利用者が LRS に古いデータに基づく変更を PUT しないことを確実にする。
+同時実行制御は API 利用者が LRS に古いデータに基づく変更を PUT、POST または DELETE しないことを確実にする。
 
 ##### 詳細
-xAPI は、 PUT が既存のデータ実体を上書きする API の一部において、楽観的な同時実行制御を実装するために、 HTTP1.1 エンティティタグ（ [ETags](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19) ）を使用する予定である。その部分は次の通り。
+xAPI は、 PUT、POST または DELETE が既存のデータ実体を上書きまたは削除する API の一部において、楽観的な同時実行制御を実装するために、 HTTP1.1 エンティティタグ（ [ETags](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19) ）を使用する予定である。その部分は次の通り。
 
 * State API
 * Agent Profile API
 * Activity Profile API
 
-状態の矛盾がほとんど発生しないことから、 ステート API は同時実行ヘッダなしの PUT リクエストを許容する予定である。
+状態の矛盾がほとんど発生しないことから、 ステート API は同時実行ヘッダなしの PUT、POST または DELETE リクエストを許容する。
 以下の必要条件は、 エージェントプロファイル API とアクティビティプロファイル API にのみ適用される。
 
 ##### クライアントの必要条件
+* Agent Profile API または Activity Profile API に PUT リクエストを投げるクライアントは [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダ、または [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含まなければならない。
 
-* Agent Profile API または Activity Profile API を使用するクライアントは [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダ、または [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含まなければならない。
+* Agent Profile API または Activity Profile API に POST リクエストを投げるクライアントは、[If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24)ヘッダ、または[If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを含むべきである。
+
+* Agent Profile API または Activity Profile API に DELETE リクエストを投げるクライアントは、[If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24)ヘッダを含むべきである。
+
 
 ##### LRS に対する必要条件
 
@@ -2124,11 +2322,19 @@ xAPI は、 PUT が既存のデータ実体を上書きする API の一部に�
 
 * LRS が PUT リクエストに応答する際には、RFC2616 (HTTP 1.1) にて説明されるとおり、 If-Match ヘッダが ETag を含む場合は、利用者が文書を最後に取り込んだあとに修正が行われたか検出するために [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダを取り扱わなければならない。
 * LRS が PUT リクエストに応答する際には、RFC2616 （"*" を含む場合は HTTP1.1 ）で定める [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを、利用者が気づかないリソース提供があるときに検出するために取り扱わなければならない。
+* POST または DELETE リクエストに返答する LRS は、ETag が含まれる場合、サービス利用者が先の取り込み時点からの変更を検出できるように、RFC2616, HTTP 1.1 に示される通り [If-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24) ヘッダを処理すべきである。
+
+* POST リクエストに返答する LRS は、"*" が含まれる場合、サービス利用者が気付かないリソースが存在するかを検出するために、RFC2616, HTTP 1.1 に示される通り [If-None-Match](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26) ヘッダを処理すべきである。
 
 上記の PUT リクエストのいずれの場合もヘッダの前提条件に当てはまらない場合、 LRS は
 
 * HTTP status 412 "Precondition Failed" を返さなければならない。
 * リソースを変更させてはならない。
+
+上記にあげた POST または DELETE リクエストのヘッダの前提条件が満たされなかった場合、LRS は
+
+* HTTP 412 "Precondition Failed" を返すべきである
+* リソースに対して変更を加えるべきではない
 
 PUT リクエストをいずれのヘッダもなく既存のリソースに対して受け取った場合は、 LRS は
 
@@ -2217,7 +2423,7 @@ LRS は次の手段のうち少なくとも一つを使用した認証をサポ�
 
 ##### 登録されていないアプリケーション＋認識された利用者のプロセスと必要条件
 
-* 空白の consumer secret を利用すること。
+* AP は空の文字列を含む consumer secret を使わなければならない。
 * "Temporary Credential" リクエストを呼び出すこと。
 * "consumer name" と他の一般的なパラメータを設定すること。そのため、利用者は "consumer name" と認証をリクエストしたアプリケーションの識別子が確認できないという警告を目にするだろう。
 * OAuth がアプリケーションを指定するため、 LRS はアプリケーションと認証しているユーザの両方をグループとして含む権限を記録しなければならない。
@@ -2231,7 +2437,12 @@ LRS は次の手段のうち少なくとも一つを使用した認証をサポ�
 
 ##### 認証なしのプロセスと必要条件
 
-* 明らかに認証されていないリクエストと　HTTP　基本認証チャレンジが提供されなければならないリクエストを区別するために、リクエストには空白のユーザ名とパスワードに基づく　HTTP　基本認証のためのヘッダを含めるべきである。
+* リクエストは、ユーザ名とパスワードにスペースの文字を含む HTTP ベーシック認証のヘッダを持たなければならない。
+* リクエストは、ユーザ名とパスワードのそれぞれが空文字列である HTTP ベーシック認証のヘッダを持つべきである。この場合、HTTP ベーシック認証ヘッダは ```Basic ``` のあとに、base64 でエンコードした ```:``` が続くものとなる。結果として文字列は、```Basic Og==```
+となる。
+
+これは、HTTP ベーシック認証のチャレンジを受けるべきリクエストと、明示的に承認されていないリクエストとを区別するためである。
+
 
 <a name="oauthscope"/></a>
 
@@ -2470,11 +2681,17 @@ LRS は格納されたステートメントが検索可能となる前に応答�
     <tr><td>registration</td><td>UUID</td><td> </td>
         <td>フィルタし、指定した registration id に一致するステートメントを返す。あるアクティビティに割り当てられるあるアクタに対して、一意の登録 ID が割り当てられることが多いが、それを前提とすべきでないことに注意が必要である。特定のアクタもしくはアクティビティのためのステートメントのみが返されるべき場合には、それらのパラメータもあわせて指定すべきである。</td><td>任意</td>
     </tr>
-    <tr><td>related_activities</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>related_activities</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>アクティビティ フィルタを広く適用する。オブジェクトや、あらゆる文脈のアクティビティ、もしくはパラメータ本来の正常な動作ではなく、アクティビティ パラメータにマッチするサブ ステートメントを含むプロパティをもつステートメントを含む。マッチングはアクティビティ パラメータと同様の方式で定義される。
         </td><td>任意</td>
     </tr>
-    <tr><td>related_agents</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>related_agents</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>エージェント フィルタを広く適用する。パラメータ本来の正常な動作ではなく、エージェント パラメータにマッチするアクタやオブジェクト、権限、インストラクタ、チームもしくはそれらのあらゆるプロパティをもつプロパティを含む。マッチングはエージェント パラメータと同様の方式で定義される。
         </td><td>任意</td>
     </tr>
@@ -2487,18 +2704,22 @@ LRS は格納されたステートメントが検索可能となる前に応答�
     <tr><td>limit</td><td>Nonnegative Integer</td><td>0</td>
         <td>返すステートメントの最大数。0 はサーバが許容する最大値を返すことを表す。</td><td>任意</td>
     </tr>
-    <tr><td>format</td><td>String: ("ids", "exact", or "canonical")</td><td>exact</td>
-        <td>「 ids 」の場合、エージェントやアクティビティ、そしてグループオブジェクトを識別するために最低限必要な情報のみを含む。匿名グループにおいては各メンバを識別するために必要な最低限の情報を意味する。「 exact 」の場合、ステートメントが受理された際と完全に同一なエージェントやアクティビティ、そしてグループオブジェクトを返す。LRS がこれらをインポートすることを目的としてステートメントを要求する場合には、「 exact 」フォーマットを用いるべきである。<br/><br/>
-        「 canonical 」の場合、以下に定義する言語フィルタを適用し、オリジナルのエージェント オブジェクトを「 exact 」モードで返したのち、 LRS により判断され、正規の定義を含んだアクティビティ オブジェクトを返す。<br/><br/>
-
-            <b>Canonical 言語プロセス:</b> アクティビティ オブジェクトは名前と説明のために Language Map オブジェクトを含む。これらのマップではひとつの言語のみが返されるべきである。<br/><br/>
-                「 canonical 」のみのフォーマットの場合、ひとつの言語がそれぞれのマップに返されるべきである。最も関連性のある言語を選択するために、LRSは、 <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">RFC 2616</a> (HTTP 1.1)で解説されている通り、Accept-Language ヘッダを適用する。ただし、全体としてリソース（ステートメントのリスト）に適用される場合ではなく、このロジックが各言語マップに個別に適用される場合はこの限りではない。
-        </td><td>任意</td>
+    <tr>
+      <td>format</td>
+      <td>String: ("ids", "exact", or "canonical")</td>
+      <td>exact</td>
+      <td>「ids」の場合、エージェントやアクティビティ、そしてグループオブジェクトを識別するために最低限必要な情報のみを含む。匿名グループにおいては各メンバを識別するために必要な最低限の情報を意味する。「exact」の場合、ステートメントが受理された際と完全に同一なエージェントやアクティビティ、そしてグループオブジェクトを返す。LRS がこれらをインポートすることを目的としてステートメントを要求する場合には、「exact」フォーマットを用いるべきである。<br/><br/>
+      「canonical」の場合、<a href="#queryLangFiltering">以下に示す言語フィルタプロセス</a>を適用した後、LRSによって指定されるアクティビティオブジェクトの正規の定義を含んだアクティビティオブジェクトを返し、もともとのエージェントオブジェクトを"exact"モードで返す
+      </td>
+      <td>任意</td>
     </tr>
     <tr><td>attachments</td><td>Boolean</td><td>False</td>
         <td>trueの場合、LRS は以前に解説している通り、マルチパートレスポンスフォーマットを用いなければならず、あらゆる添付文書を含めなければならない。falseの場合には LRS はContent-Type application/json の形式で所定の応答を送信し、添付ファイルを使用することはできません。</td><td>任意</td>
     </tr>
-    <tr><td>ascending</td><td>Boolean</td><td>False</td>
+    <tr>
+        <td>ascending</td>
+        <td>Boolean</td>
+        <td>false</td>
         <td>true の場合、格納された時間の昇順で結果を返す。</td><td>任意</td>
     </tr>
 </table>
@@ -2509,9 +2730,11 @@ LRS は格納されたステートメントが検索可能となる前に応答�
 
 * LRS はこれらリソースに対するリクエストに対してステートメント ID または voidedStatementId のパラメータを含み、また「 attachments 」もしくは「 format 」以外のパラメータを含む場合、```HTTP 400```エラーで拒絶しなければならない。。
 
+* クエリフィルタ条件に合致するステートメントがない場合でも、LRS は ```HTTP 200``` および [StatementResult](#retstmts) オブジェクトを返さなければならない。この場合、statements プロパティは空の配列をもつ。
+
 * LRS はステートメントリクエストに対するあらゆる応答に対して「 X-Experience-API-Consistent-Through 」ヘッダを <a href="https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations">ISO 8601 combined date and time</a> フォーマットを含まなければならない。その値は、指定されたタイプスタンプ以前の "stored" プロパティを持つ全てのステートメントが、妥当な確からしさで取り出し可能になっていることを示すタイムスタンプである。この時間は、ステートメントが検索可能となるまでの遅延をもたらす過剰負荷などの任意の一時的な状態を考慮すべきである。
 
-* GET statementのattachmentプロパティが使用されており「 true 」の場合、LRSはマルチパートレスポンスフォーマットを使用し、<a href="#attachments">4.1.11</a>で説明されているようにすべてのattachmentsが含まれなければならない。
+* GET statementのattachmentプロパティが使用されており「true」の場合、LRSはマルチパートレスポンスフォーマットを使用し、<a href="#attachments">4.1.11</a>で説明されているようにすべてのattachmentsが含まれなければならない。
 
 * GET statementのattachmentプロパティが使用されており「 false 」の場合、LRSはattachment raw dataを含めてはならず、application/jsonに報告しなければならない。
 
@@ -2540,6 +2763,13 @@ B が C を参照している状況で、上に示すフィルタ条件がステ
 
 __注釈:__コンテキストのステートメント フィールドで用いられる StatementRefs は、ステート
 メントのフィルタに対して影響を与えない。
+
+<a name="queryLangFiltering" />
+
+###### 正規フォーマットのステートメントに対する言語フィルタリングの要求
+
+* 名前、説明およびインタラクション要素のために、言語マップオブジェクトを含むアクティビティオブジェクト。LRSはこれらのマップの中の１つの言語で返答しなければならない。
+* もっとも関連性の高い言語を選ぶために、LRSは<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">RFC 2616</a> (HTTP 1.1) で示される Accept-Language ヘッダを適用しなければならない。注意点として、どの言語エントリを含めるべきかは、リソース全体（ステートメントのリスト）ではなく、それぞれの言語マップ毎に適用しなければならない。
 
 <a name="voidedStatements" /></a>
 
@@ -2674,18 +2904,23 @@ DELETE はその他のパラメータを通じて与えられた文脈の全て�
 エンドポイント例: http://example.com/xAPI/activities/state
 
 アクティビティ、エージェント、そして登録（存在すれば）からなる文脈に与えられた
-stateId によって指定される文書を記録、取り込み、又は削除する。
+stateId によって指定される文書を記録、変更、取り込み、または削除する。
 
 戻り値: (PUT | POST | DELETE): ```204 No Content```<br>
 戻り値: (GET): ```200 OK```, State Content
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>このステートと関連したアクティビティID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>このステートと関連したアクティビティID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
-        <td>このステートと関連したエージェント</td><td>必須</td>
+    <tr><td>agent</td>
+        <td>Agent object (JSON)</td>
+        <td>このステートと関連したエージェント</td>
+        <td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
         <td>このステートと関連した登録</td><td>任意</td>
@@ -2707,10 +2942,15 @@ stateId によって指定される文書を記録、取り込み、又は削除
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>これらのステートと関連したアクティビティ ID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>これらのステートと関連したアクティビティ ID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>これらのステートと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
@@ -2731,11 +2971,17 @@ stateId によって指定される文書を記録、取り込み、又は削除
 戻り値: ```204 No Content```
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
-        <td>このステートと関連したアクティビティ ID</td><td>必須</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
+        <td>このステートと関連したアクティビティ ID</td>
+        <td>必須</td>
     </tr>
-    <tr><td>agent</td><td>JSON</td>
-        <td>このステートと関連したエージェント</td><td>必須</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
+        <td>このステートと関連したエージェント</td>
+        <td>必須</td>
     </tr>
     <tr><td>registration</td><td>UUID</td>
         <td>このステートと関連した登録 ID</td><td>任意</td>
@@ -2770,7 +3016,9 @@ stateId によって指定される文書を記録、取り込み、又は削除
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>ロードするアクティビティと関連したアクティビティ ID</td><td>必須</td>
     </td>
 </table>
@@ -2779,13 +3027,15 @@ stateId によって指定される文書を記録、取り込み、又は削除
 
 エンドポイント例: http://example.com/xAPI/activities/profile
 
-指定されたアクティビティの文脈で特定のプロファイル文書を保存 / 読み出し / 削除する。
+指定されたアクティビティの文脈で特定のプロファイル文書を記録、変更、取り込み、または削除する。
 
 戻り値 (PUT | POST | DELETE): ```204 No Content```<br>
 戻り値 (GET): ```200 OK```, Profile Content
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>このプロファイルと関連したアクティビティ ID</td><td>必須</td>
     </tr>
     <tr><td>profileId</td><td>String</td>
@@ -2804,7 +3054,9 @@ stateId によって指定される文書を記録、取り込み、又は削除
 戻り値: ```200 OK```, List of ids
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th><tr>
-    <tr><td>activityId</td><td>String</td>
+    <tr>
+        <td>activityId</td>
+        <td>Activity id (IRI)</td>
         <td>これらのプロファイルと関連したアクティビティ ID</td><td>必須</td>
     </tr>
     <tr><td>since</td><td>Timestamp</td>
@@ -2905,7 +3157,9 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>拡張されたエージェント情報を取り込む際に使用するエージェント表現</td><td>必須</td>
     </tr>
 </table>
@@ -2919,14 +3173,16 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 エンドポイント例: http://example.com/xAPI/agents/profile
 
-指定されたエージェントの文脈で特定のプロファイル文書を保存/読み出し/削除する。
+指定されたエージェントの文脈で特定のプロファイル文書を記録、変更、取り込み、または削除する。
 
 戻り値 (PUT | POST | DELETE): ```204 No Content```
 戻り値 (GET): ```200 OK```, Profile Content
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>このプロファイルと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>profileId</td><td>String</td>
@@ -2945,7 +3201,9 @@ person 概念とは異なることに注意してほしい。ここでは person
 
 <table>
     <tr><th>パラメータ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>agent</td><td>Object (JSON)</td>
+    <tr>
+        <td>agent</td>
+        <td>Agent object (JSON)</td>
         <td>このプロファイルと関連したエージェント</td><td>必須</td>
     </tr>
     <tr><td>since</td><td>Timestamp</td>
@@ -3661,6 +3919,8 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
     ]
 }
 ```
+
+この例において、正解の最小値は 4 であり、最大値はない。5, 6, 976 といった数値は全て正解となる。
 
 ###### other
 ```
