@@ -977,7 +977,10 @@ IRL からアクティビティ定義を解析することができ、そこか�
 それらの実情と構造を xAPI にも拡張するために、本仕様では SCORM 2004 第4版の
 データモデルを参考にしたインタラクションの定義を含んでいる。これらの定義はインタ
 ラクションのデータを記録するためのシンプルで使い慣れた仕組みを提供することを目
-的としている。これらの定義はシンプルで使いやすいが、制約もある。より高機能なイン
+的としている。1.0.3 より、SCORM データモデルに対する直接の参照は削除し始めており、
+関連する要求は本文書に直接記述されている。
+
+これらのインタラクション定義はシンプルで使いやすいが、制約もある。より高機能なイン
 タラクションの定義が必要な実践コミュニティは、アクティビティのタイプと定義の拡張を
 利用することによりそれを実現できる。
 
@@ -990,33 +993,158 @@ IRL からアクティビティ定義を解析することができ、そこか�
     <tr>
         <td>interactionType</td>
         <td>String</td>
-        <td>SCORM2004 4th 版のRun-Time Environmentで定義している"cmi.interactions.n.type"</td>
+        <td>インタラクションのタイプ。取りうる値は "true-false", "choice", "fill-in", "long-fill-in", “matching”, “performance”, “sequencing”, “likert”, “numeric” または “other” である。</td>
         <td>任意</td>
     </tr>
     <tr>
         <td>correctResponsesPattern</td>
         <td>An array of strings</td>
-        <td>SCORM2004 4th 版の Run-Time Environment で定義している" cmi.interactions.n.correct_responses.n.pattern "に対応し、最後の n は配列のインデックスとなる</td>
+        <td>インタラクションに対する正しいレスポンスを示すパターン。このパターンの構造は interactionType に依存する。下記に詳細を示す。</td>
         <td>任意</td>
     </tr>
     <tr>
         <td>choices | scale | source | target | steps</td>
         <td>Array of interaction components</td>
-        <td>interactionType (後述参照)にて特定</td>
+        <td>与えられた instructionType (<a href="#interactionComponentLists">以下参照</a>)による</td>
         <td>任意</td>
     </tr>
 </table>
 
-###### デリミタに関する注意
-SCORM 2004 第4版ランタイム環境は、文字列に関するなんらかの情報を伝える特定のデリミタを
-追加することを許可している。これは、該当文書のセクション 4.1.1.6 予約されたデリミタに概要
-が示され、RTE データモデル全体から参照されている。 これらのデリミタは SCORM 2004 第4版
-ランタイム環境のセクション 4.2.9.1 Correct Responses Pattern データモデル要素詳細に定義さ
-れているいくつかのインタラクションにおいて Correct Responses パターンの中で利用することが
-できる。
+###### インタラクションタイプ
+以下の表では各 interactionType で示されるインタラクションの種類について説明する。
+これらのインタラクションのタイプは、SCORM 2004 第４版ランタイム環境の
+"cmi.interactions.n.type" にて許されるインタラクションのタイプに基づいている。
+各インタラクションタイプについては、[Appendix C](#AppendixC)を参照のこと。
 
-セクション 4.1.1.6 と表 4.2.9.1 のデリミタの順序について一部矛盾がある。xAPI においては、4.2.9.1
-で示されるデリミタの順序を正しいものとする。
+<table>
+    <tr><th>intractionType</th><th>説明</th></tr>
+    <tr>
+        <td>true-false</td>
+        <td>次の二値を取るインタラクション: true または false</td>
+    </tr>
+    <tr>
+        <td>choice</td>
+        <td>学習者が選択できる複数の選択肢をもつインタラクション。学習者がリストから単一の答えを選択できるインタラクションと、複数の要素を選択できるものを含む。</td>
+    </tr>
+    <tr>
+        <td>fill-in</td>
+        <td>学習者が１つ以上の短い文字列を回答することを要求するインタラクション。典型的には、語の一部や、少数の文字列が回答となる。「短い」とは正解や回答者の回答文字列が、250文字程度以内であることを意味する。</td>
+    </tr>
+    <tr>
+        <td>long-fill-in</td>
+        <td>学習者が長い文章の形式で回答することを要求するインタラクション。「長い」とは正解や回答者の回答文章が、250文字を超える程度であることを意味する。
+        </td>
+    </tr>
+    <tr>
+        <td>matching</td>
+        <td>An interaction where the learner must match items in one set (the source set) to items in another set (the target set).
+            Items do not have to pair off exactly and it's possible for multiple or zero source items to be matched to a given target and vice versa.</td>
+    </tr>
+    <tr>
+        <td>performance</td>
+        <td>学習者が複数のステップからなるタスクを実行することを要求するインタラクション。</td>
+    </tr>
+    <tr>
+        <td>sequencing</td>
+        <td>学習者がある要素群の順序を並べ替えるインタラクション。</td>
+    </tr>
+    <tr>
+        <td>likert</td>
+        <td>学習者がある尺度上の離散的な値を選択することを求めるインタラクション。</td>
+    </tr>
+    <tr>
+        <td>numeric</td>
+        <td>学習者が数値で回答することを要求するインタラクション。</td>
+    </tr>
+    <tr>
+        <td>other</td>
+        <td>上記の定義に当てはまらないタイプのインタラクション。</td>
+    </tr>
+</table>
+
+###### 返答パターン
+以下の表では、各インタラクションタイプの correctResponsesPattern 要素の文字列フォーマットを示す。このフォーマットは、要求オブジェクト中の学習者の返答を示すためにも用いられる。
+これらのインタラクションのタイプは、SCORM 2004 第４版ランタイム環境の
+"cmi.interactions.n.type" にて許されるインタラクションのタイプに基づいている。
+各インタラクションタイプについては、[Appendix C](#AppendixC)を参照のこと。
+Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
+
+<table>
+    <tr><th>intractionType</th><th>フォーマット</th></tr>
+    <tr>
+        <td>true-false</td>
+        <td><code>true</code> または <code>false</code> のいずれか</td>
+    </tr>
+    <tr>
+        <td>choice</td>
+        <td><code>[,]</code> によって区切られる要素のリスト。もし返答に要素が１つしか含まれない場合は、区切り文字を使ってはならない。</td>
+    </tr>
+    <tr>
+        <td>fill-in と long-fill-in</td>
+        <td><code>[,]</code> によって区切られる返答のリスト。もし返答に要素が１つしか含まれない場合は、区切り文字を使ってはならない。</td>
+    </tr>
+    <tr>
+        <td>matching</td>
+        <td>マッチするペアのリストで、それぞれのペアは連携元の要素 ID に続いて、連携先の要素 ID をもつ。要素としては（０を含む）複数のペアが存在することができる。ペアの中の要素は、<code>[.]</code>によって区切られる。それぞれのペアは <code>[,]</code>によって区切られる。
+        </td>
+    </tr>
+    <tr>
+        <td>performance</td>
+        <td>ステップ ID とそのステップに対する返答を含むステップのリスト。ステップ ID は返答と <code>[.]</code> によって区切られる。各ステップは <code>[,]</code> によって区切られる。
+        fill-in インタラクションにおける文字列や数値インタラクションの数値範囲のような形をとること賀できる。
+        </td>
+    </tr>
+    <tr>
+        <td>sequencing</td>
+        <td><code>[,]</code> によって区切られる要素 ID を順位づけしたリスト。</td>
+    </tr>
+    <tr>
+        <td>likert</td>
+        <td>単一の要素 ID</td>
+    </tr>
+    <tr>
+        <td>numeric</td>
+        <td><code>:</code> で区切られた最小値と最大値によって示される数値範囲。</td>
+    </tr>
+    <tr>
+        <td>other</td>
+        <td>このタイプのインタラクションにおいては、いかなるフォーマットも有効である。</td>
+    </tr>
+</table>
+
+###### 文字列パラメータ
+上に示した返答に含まれるいくつかの値には、追加のパラメータを付与することができる。これらは SCORM 2004 第４版ランタイム環境によって定義された区切り文字列を元にしている。これらのパラメータは ```{parameter=value}``` の形式によって表現される。[Appendix C の long-fill-in の例] (#long-fill-in) を参照。
+
+以下のパラメータはリスト型のインタラクションタイプの要素のリストを定義する文字列の先頭において有効である。
+
+<table>
+    <tr><th>パラメータ</th><th>説明</th><th>値</th><th>インタラクションタイプ</th></tr>
+    <tr>
+        <td>case_matters</td>
+        <td>リスト中の要素の大文字小文字の別が参酌されるか</td>
+        <td><code>true</code> または <code>false</code></td>
+        <td>fill-in, long-fill-in</td>
+    </tr>
+    <tr>
+        <td>order_matters</td>
+        <td>リスト中の要素の順序が参酌されるか</td>
+        <td><code>true</code> または <code>false</code></td>
+        <td>fill-in, long-fill-in, performance</td>
+    </tr>
+</table>
+
+以下のパラメータはリスト型のインタラクションタイプの要素リストの先頭において有効である。
+
+<table>
+    <tr><th>パラメータ</th><th>説明</th><th>値</th><th>インタラクションタイプ</th></tr>
+    <tr>
+        <td><code>lang</code></td>
+        <td>要素で用いられる言語</td>
+        <td><a href="http://tools.ietf.org/html/rfc5646">RFC 5646 言語タグ</a></td>
+        <td>fill-in, long-fill-in, performance (文字列返答のみ)</td>
+    </tr>
+</table>
+
 
 ###### 必要条件
 
@@ -1025,6 +1153,9 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
 * 有効な interactionType を受信した場合、 LRS は残りのプロパティを下記の表に沿っ
 て確認し、もし残りのプロパティがインタラクションアクティビティに対して有効でない場合
 は、HTTP 400 "Bad Request" を返してもよい。
+* LRS は返答パターンに関して文字数制限をかけるべきではない。
+* LRS はいずれの interactionType の correctResponsesPatterns 配列の長さに制限をかけるべきではない。
+
 
 ##### インタラクションのコンポーネント
 
@@ -1047,17 +1178,23 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
     </tr>
 </table>
 
-<a name="interactionType"/></a>
-インタラクションアクティビティにおける interactionType でサポートしている CMI インタ
-ラクションコンポーネントは以下の表の通り。
+<a name="interactionComponentLists"/></a>
+インタラクションタイプに応じて、インタラクションアクティビティは、それぞれにインタラクション要素を含む追加のプロパティをとっても良い。これらの追加のプロパティは "interaction component lists" と呼ばれる。次の表は、与えられた interactionType のインタラクションアクティビティで利用可能なインタラクションコンポーネントリストを示す。
+
 
 <table>
-    <tr><th>インタラクションタイプ</th><th>サポートしているコンポーネントのリスト</th><tr>
-    <tr><td>choice, sequencing</td><td>choices</td></tr>
-    <tr><td>likert</td><td>scale</td></tr>
-    <tr><td>matching</td><td>source, target</td></tr>
-    <tr><td>performance</td><td>steps</td></tr>
-    <tr><td>true-false, fill-in, long-fill-in, numeric, other</td><td>[No component lists defined]</td></tr>
+    <tr><th>interactionType</th><th>サポートされるインタラクションコンポーネントリスト</th><th>Description</th><tr>
+    <tr><td>choice, sequencing</td><td>choices</td>
+    <td>選択や順序づけのインタラクションで利用できるオプションのリスト。</td>
+    </tr>
+    <tr><td>likert</td><td>scale</td>
+    <td>リッカートスケールに対するオプションのリスト</td></tr>
+    <tr><td>matching</td><td>source, target</td>
+    <td>マッチさせるべき連携元と連携先のリスト</td></tr>
+    <tr><td>performance</td><td>steps</td>
+    <td>パフォーマンスインタラクションを形成する要素のリスト</td></tr>
+    <tr><td>true-false, fill-in, long-fill-in, numeric, other</td><td>[No component lists defined]</td><td></td></tr>
+
 </table>
 
 ###### 必要条件
@@ -1245,12 +1382,36 @@ SCORM 2004 第4版ランタイム環境は、文字列に関するなんらか�
 
 <table border ="1">
     <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
-    <tr><td>scaled</td><td>-1から1までの十進数</td><td>CORM2004 4th 版の 'cmi.score.scaled' を参照</td><td>推奨</td></tr>
-    <tr><td>raw</td><td>min と max の間の十進数  'cmi.score.raw'を参照
-    （現状、そうでなければ無制限）</td><td>'cmi.score.raw' を参照</td><td>任意</td></tr>
-    <tr><td>min</td><td>maxよりも小さい十進数 </td><td>'cmi.score.min' を参照</td><td>任意</td></tr>
-    <tr><td>max</td><td>minよりも大きい十進数 </td><td>'cmi.score.max' を参照</td><td>任意</td></tr>
+    <tr>
+      <td>scaled</td>
+      <td>-1から1までの小数</td>
+      <td>ある経験において取りうる最高点に対する割合で示した、有る経験に対するスコア。負のスコアの場合には、とりうる最低点に対する割合として計算される。正のスコアの場合、スコアは、素点を最高点で割ったものとして計算される（それらの数値が有る場合〕。
+      </td>
+
+      <td>推奨</td>
+    </tr>
+    <tr>
+      <td>raw</td>
+      <td>min と max の間の小数 'cmi.score.raw'を参照（現状、そうでなければ無制限）</td>
+    　<td>ステートメントで表現されている経験について、アクタが達成したスコア。この数値はスケーリングや平準化によって補正されていないものである。</td>
+
+      <td>任意</td>
+    </tr>
+    <tr>
+      <td>min</td>
+      <td>maxよりも小さい小数 </td>
+    　<td>ステートメントで表現されている経験についての最も低いスコア。</td>
+      <td>任意</td>
+    </tr>
+    <tr>
+      <td>max</td>
+      <td>minよりも大きい小数</td>
+      <td>ステートメントで表現されている経験についての最も高いスコア。</td>
+      <td>任意</td>
+    </tr>
 </table>
+
+スコアオブジェクトのプロパティは SCORM 2004 第４版で定義されている cmi.score の関連するプロパティに基づいてる。
 
 ###### 必要条件
 
@@ -3758,6 +3919,8 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
     ]
 }
 ```
+
+この例において、正解の最小値は 4 であり、最大値はない。5, 6, 976 といった数値は全て正解となる。
 
 ###### other
 ```
