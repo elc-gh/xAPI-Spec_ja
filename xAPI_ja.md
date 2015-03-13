@@ -489,7 +489,7 @@ __動詞 (Verb)__: ステートメント中のアクティビティにおける�
     <tr><td><a href="#actor">actor</a></td><td>Object</td>
     <td>ステートメントが誰に関するものか（<a href="#agent">Agent</a> や <a href="#group">Group</a> として）。"I Did This" の中の "I" に対応。</td><td>必須</td></tr>
     <tr><td><a href="#verb">verb</a></td><td>Object</td>
-    <td>学習者やチームオブジェクトの行う行為。"I Did This" の "Did" に相当。</td><td>必須</td></tr>
+    <td>アクタによって行われる行為。"I Did This" の "Did" に相当。</td><td>必須</td></tr>
     <tr><td><a href="#object">object</a></td><td>Object</td>
     <td>ステートメントの目的語となる アクティビティ、エージェント、または別のステートメント。"I Did This" の "This" に相当。この項目の値として提供される目的語には "objectType" フィールドを含むべきであることに注意。指定しない場合は目的語はアクティビティであるとみなされる。</td><td>必須</td></tr>
     <tr><td><a href="#result">result</a></td><td>Object</td>
