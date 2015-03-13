@@ -1403,6 +1403,13 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
 </tr>
 </table>
 
+###### 必要条件
+
+* duration プロパティは ISO 8601:2004(E) section 4.4.3.2 のフォーマットによって示さ
+れる期間によって表現されなければならない。（ISO 8601:2004(E) section 4.4.3.3 に示され
+る）大体フォーマットは使ってはならない。
+
+
 <a name="Score"/></a>
 ##### 4.1.5.1 スコア（Score)
 
