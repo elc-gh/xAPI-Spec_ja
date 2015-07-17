@@ -109,6 +109,7 @@ tincan@elc.or.jp
 *   [Appendix D: 1.0.0 形式のステートメントへの変換](#AppendixD)
 *   [Appendix E: サイン付きステートメントの例](#AppendixE)
 *   [Appendix F: 全てのエンドポイントの表](#AppendixF)
+*   [Appendix G: クロスドメインリクエストの例](#AppendixG)
 
 <div style="page-break-after: always;"></div>
 <a name="revhistory"/></a>
@@ -3429,20 +3430,48 @@ xAPI のゴールの一つは、クロスドメイントラッキングを許可
 
 ##### 詳細/必要条件
 
-上記の制限により特定の呼び出しのための通常の構文を使用できないときにのみ利用側
-が使用すべき別の構文について、以下に述べる。
+上記の制限により特定の呼び出しのための通常の構文を使用できないときにのみ利用側が使用
+すべき別の構文について、以下に述べる。この別の構文は、クエリー文字列の長さの制限のた
+め、GETステートメントに用いられても良い。
 
-__メソッド__: 発行された全 xAPI リクエストは POST されなければならない。対象とする
-xAPI メソッドはリクエスト上の唯一の問合せ文字列パラメータとして含まれなければならない。
-（例: http://example.com/xAPI/statements?method=PUT）
+__メソッド__:
+* 発行された全 xAPI リクエストは POST でなければならない。
+* 想定されるxAPIメソッドは、"method"クエリー文字列パラメータの値として指定されなけ
+ればならない。
+* APは、リクエストのクエリー文字列パラメータ以外を含んではならない。
 
-__ヘッダー__: HTTP ヘッダーに記述すべき必須のパラメータは、同名の form パラメータ
-として与えなければならない。
+例：http://example.com/xAPI/statements?method=PUT
 
-__コンテンツ__: xAPI の呼び出しがコンテンツの送信を伴う場合、 "content" と呼ばれる
-フォームパラメータとしてコンテンツはエンコードされ、含まれなければならない。LRS は
-UTF-8 文字列としてこのコンテンツを解釈する。バイナリデータの記録は、この構文でサ
-ポートされない。
+__コンテンツ__:
+* xAPIコールがコンテンツの送信を含む場合、APはコンテンツをURLエンコードし、"content"
+というフォームパラメータとして与えなければならない。
+
+__ヘッダー__:
+* APは、本仕様書によって要求されるヘッダーパラメータを指定しても良い。ヘッダーは、同
+じ名前のフォームパラメータとしてHTTPヘッダーに現れることが期待される。これは、次のパ
+ラメータに適用される。：Authorization, X-Experience-API-Version, Content-Type,
+Content-Length, If-Match 及び If-None-Match。Content-Transfer-Encoding ヘッダー
+には適用されない。
+* LRSは上記に示したフォームパラメータをヘッダーパラメータとして取り扱わなければなら
+ない。
+* APは上記のHTTPヘッダーにリストされない他のヘッダーパラメータを、正常として含まなけ
+ればならない。
+* APは、これらの'application/x-www-form-urlencoded'の値を持つ種類の要求に対しても、
+Content-Typeヘッダー(HTTPヘッダー中)にさらに指定すべきである。
+* Content-Typeフォームパラメータはコンテンツフォームパラメータの中のコンテンツのコ
+ンテントタイプを特定すべきである。
+* APは、これらの要求のコンテンツの全体の長さを示している要求においても、Content-Length
+ヘッダーを（HTTPヘッダー中に）さらに指定すべきである。
+* Content-Lengthフォームパラメータは、コンテンツフォームパラメータの中のコンテンツの
+長さを指定すべきで、よって、Content-Lengthヘッダーにリストされる長さより小さな数値と
+なる。
+
+__クエリー文字列パラメータ__:
+* 'method'以外のクエリー文字列パラメータは、同じ名前のフォームパラメータとして指定さ
+れなければならない。
+* LRSは、"content"および上記にあげたヘッダーパラメータ以外の全てのフォームパラメータ
+をクエリー文字列パラメータとして扱わなければならない。
+
 
 __添付文書__:添付文書データの送信は、multipart/mixed リクエストを送信する必要があり、
 それゆえ添付データの送信はこの構文でサポートされない。 4.1.11. Attachments を参照。
@@ -3467,6 +3496,8 @@ Internet Explorer 10 より低いバージョンが、HTTP と HTTPS 間でク�
 提供してもよい。
 * LRS とクライアントは、このスキームの利用を決定する前に、セキュリティリスクを考慮す
 べきである。
+
+詳細は、[Appendix G:クロスドメインリクエストの例](#AppendixG)を参照のこと。
 
 <a name="validation"/></a>
 
@@ -4494,4 +4525,57 @@ __注記:__ 添付した署名が表示されない場合、 attachments で添�
         <td>Token Request</td>
     </tr>
 </table>
->
+
+<a name="AppendixG"/>
+
+## Appendix G: クロスドメイン要求の例
+
+[7.8 Cross Origin Requests](#78-cross-origin-requests)は、通常の構文がブラウザや
+クエリー文字列の長さの制限などで利用できない場合の、代替の構文について概略をしめして
+いる。このAppendixでは、そのフォーマットに従うPUTステートメントの例を示す。
+
+通常の構文：
+
+```
+URL: http://example.com/xAPI/statements
+Method: PUT
+
+Query String Parameters:
+    statementId=c70c2b85-c294-464f-baca-cebd4fb9b348
+
+Request Headers:
+    Accept:*/*
+    Accept-Encoding:gzip, deflate, sdch
+    Accept-Language:en-US,en;q=0.8
+    Authorization: Basic VGVzdFVzZXI6cGFzc3dvcmQ=
+    Content-Type: application/json
+    X-Experience-API-Version: 1.0.1
+    Content-Length: 351
+
+Content:
+{"id":"c70c2b85-c294-464f-baca-cebd4fb9b348","timestamp":"2014-12-29T12:09:37.468Z","actor":{"objectType":"Agent","mbox":"mailto:example@example.com","name":"Test User"},"verb":{"id":"http://adlnet.gov/expapi/verbs/experienced","display":{"en-US":"experienced"}},"object":{"id":"http://example.com/xAPI/activities/myactivity","objectType":"Activity"}}
+
+```
+
+代替の構文を使った要求：
+
+```
+URL: http://example.com/xAPI/statements?method=PUT&statementId=c70c2b85-c294-464f-baca-cebd4fb9b348
+Method: POST
+
+Request Headers:
+    Accept:*/*
+    Accept-Encoding:gzip, deflate, sdch
+    Accept-Language:en-US,en;q=0.8
+    Content-Type: application/x-www-form-urlencoded
+    Content-Length: 745
+
+Content (with added line breaks and not URL encoded for readability):
+    statementId=c70c2b85-c294-464f-baca-cebd4fb9b348
+    &Authorization=Basic VGVzdFVzZXI6cGFzc3dvcmQ=
+    &X-Experience-API-Version=1.0.1
+    &Content-Type=application/json
+    &Content-Length=351
+    &content={"id":"c70c2b85-c294-464f-baca-cebd4fb9b348","timestamp":"2014-12-29T12:09:37.468Z","actor":{"objectType":"Agent","mbox":"mailto:example@example.com","name":"Test User"},"verb":{"id":"http://adlnet.gov/expapi/verbs/experienced","display":{"en-US":"experienced"}},"object":{"id":"http://example.com/xAPI/activities/myactivity","objectType":"Activity"}}
+```
+
