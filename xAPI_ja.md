@@ -511,7 +511,7 @@ __動詞 (Verb)__: ステートメント中のアクティビティにおける�
     </td><td>非推奨</td></tr>
     <tr>
         <td><a href="#attachments">attachments</a></td>
-        <td>Array of attachment Objects</td>
+        <td>順序付されたAttachmentオブジェクトの配列</td>
         <td>ステートメントに対する添付文書のヘッダー。</td><td>任意</td>
     </tr>
 </table>
@@ -1812,7 +1812,7 @@ LRS からのデータを処理するシステムは、ステートメントの�
 ###### 詳細
 以下のテーブルは添付文書オブジェクトのすべてのプロパティを示す。
 <table>
-    <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th></tr>
+    <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th><th>対応するリクエストパラメータ</th></tr>
     <tr>
         <a name="attachmentUsage" /></a>
 
@@ -1820,42 +1820,49 @@ LRS からのデータを処理するシステムは、ステートメントの�
         <td>IRI</td>
         <td>この添付文書の利用方法を規定する。例えば、添付文書の期待されるユースケースの１つに「修了証明」を含むことがある。この用途に対応するタイプ IRI を作成し、修了証明添付文書と一緒に利用されなければならない。</td>
         <td>必須</td>
+        <td></td>
     </tr>
     <tr>
         <td>display</td>
         <td><a href="#misclangmap">Language Map</a></td>
         <td>この添付文書の名前（タイトル）を表示する。</td>
         <td>必須</td>
+        <td></td>
     </tr>
     <tr>
         <td>description</td>
         <td><a href="#misclangmap">Language Map</a></td>
         <td>添付文書の説明</td>
         <td>任意</td>
+        <td></td>
     </tr>
     <tr>
         <td>contentType</td>
         <td><a href="https://www.ietf.org/rfc/rfc2046.txt?number=2046">Internet Media Type</a></td>
         <td>添付文書のコンテンツタイプ</td>
         <td>必須</td>
+        <td>Content-Type</td>
     </tr>
     <tr>
         <td>length</td>
         <td>integer</td>
         <td>オクテットで示した添付文書データの長さ</td>
         <td>必須</td>
+        <td>Content-Length</td>
     </tr>
     <tr>
         <td>sha2</td>
         <td>String</td>
         <td>添付文書データの SHA-2 (SHA-256, SHA-384, SHA-512) ハッシュ。SHA-224は使うべきではない。最低256ビット以上のキーが推奨される。</td>
         <td>必須</td>
+        <td>X-Experience-API-Hash</td>
     </tr>
     <tr>
         <td>fileUrl</td>
         <td>IRL</td>
         <td>添付文書データが取り出されうる IRL、あるいは、取り出しが可能であった IRL。</td>
         <td>任意</td>
+        <td></td>
     </tr>
 </table>
 
@@ -1877,12 +1884,12 @@ _添付文書交換の手続き_
 * RFC1341 (http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) における multipart/mixed の定義に準拠しなければならない。かつ、以下の条件を満たさなければならない:
     * multipart 文書の最初にはステートメント自身が "application/json" タイプで含まれる。
     * 他の追加部分は、添付文書の生のデータを含み、ステートメントの論理部分を形成する。この機能はステートメントリソースに対して PUT や POST が発行されたときに利用可能である。
-	* 最初の（ステートメント）部分に続く各部分のヘッダーには X-Experience-API-Hashパラメータを含まなければならない。
-	* このパラメータは、この部分に含まれる添付文書に一致した添付文書宣言の "shar2" プロパティと一致していなければならない。
-	* 最初の（ステートメント）部分に続くそれぞれのパートのヘッダーに、
-"Content-Transfer-Encoding"パラメータの値として "binary" を含めなければならない。
-    * 複数のステートメントが同時に送られ、同じ添付文書が使われた時は、１つの添付文書のデータだけを含むべきである。
-    * 各部分のヘッダーには Content-type パラメータを含むべきであり、最初の部分は application/json タイプにしなければならない。
+    * 最初の（ステートメント）部分に続く各部分のヘッダーには X-Experience-API-Hashパラメータを含まなければならない。
+     * 最初の（ステートメント）部分に続くそれぞれのパートのヘッダーに、"Content-Transfer-Encoding"パラメータの値として "binary" を含めなければならない。
+     * 複数のステートメントが同時に送られ、同じ添付文書が使われた時は、１つの添付文書のデータだけを含むべきである。
+    * 各部分のヘッダーには Content-type パラメータを含むべきである。（ステートメントを含む）最初のパートについては、"application/json"でなくてはならない。
+    * パラメータが、Attachmentオブジェクト（上記テーブル参照）中の対応するプロパティを持つ場合で、与えられたAttachmentにパラメータとプロパティの両方が指定されている場合、これらのパラメータとプロパティは適合しなければならない。
+
 
 ###### LRSの必要条件
 
