@@ -2371,10 +2371,18 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 
 例:  ``X-Experience-API-Version : 1.0.1``
 
+1.0.0版より、 xAPI は [セマンティックバージョニング 1.0.0]
+(http://semver.org/spec/v1.0.0.html) に従いバージョン付けされる。
+クライアントからの全てのリクエストと、LRSからの全てのレスポンスは、
+"X-Experience-API-Version" を名前、バージョンを値とする HTTP ヘッダーを持たなけ
+ればならない。たとえば、バージョン1.0.3においては、``X-Experience-API-Version : 1.0.3``
+となる。本仕様書のバー所ｙんについては、[Revision History](#revhistory)を参照のこと。
+
+
 ###### LRS の必要条件:
 
 * LRS は全てのレスポンスに "X-Experience-API-Version" ヘッダを含めなければならない。
-* LRS はこのヘッダに "1.0.1" を設定しなければならない。
+* LRS はこのヘッダに、最新バージョンの値を設定しなければならない。
 * LRS はバージョンヘッダに ”1.0” が設定されたリクエストをバージョンヘッダが ”1.0.0” であるとみなして受入れなければならない。
 * LRS は"1.0.0" より前のバージョンヘッダが設定されたリクエストをヘッダ内に指定された以前のバージョンに完全に準拠した実装へ渡されない限りは拒否しなければならない。
 * LRS は"1.1.0" もしくはそれ以上のバージョンヘッダが設定されたリクエストを拒否しなければならない。
@@ -2383,7 +2391,7 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 ###### クライアントの必要条件:
 
 * クライアントは全てのリクエストに "X-Experience-API-Version" ヘッダを含めなければならない。
-* クライアントはこのヘッダに "1.0.1" を設定しなければならない。
+* クライアントはこのヘッダに、最新バージョンの値を設定しなければならない。
 * クライアントは"1.0.0" もしくはそれ以降のバージョンが設定されたレスポンスを受けとることを許容すべきである。
 * クライアントは追加されたプロパティを含むデータ構造を受けとることを許容すべきである。
 * クライアントはバージョン “1.0.0” 仕様で規定されていないプロパティはすべて無視すべきである。
@@ -4584,7 +4592,7 @@ Request Headers:
     Accept-Language:en-US,en;q=0.8
     Authorization: Basic VGVzdFVzZXI6cGFzc3dvcmQ=
     Content-Type: application/json
-    X-Experience-API-Version: 1.0.1
+    X-Experience-API-Version: 1.0.3
     Content-Length: 351
 
 Content:
@@ -4608,7 +4616,7 @@ Request Headers:
 Content (with added line breaks and not URL encoded for readability):
     statementId=c70c2b85-c294-464f-baca-cebd4fb9b348
     &Authorization=Basic VGVzdFVzZXI6cGFzc3dvcmQ=
-    &X-Experience-API-Version=1.0.1
+    &X-Experience-API-Version=1.0.3
     &Content-Type=application/json
     &Content-Length=351
     &content={"id":"c70c2b85-c294-464f-baca-cebd4fb9b348","timestamp":"2014-12-29T12:09:37.468Z","actor":{"objectType":"Agent","mbox":"mailto:example@example.com","name":"Test User"},"verb":{"id":"http://adlnet.gov/expapi/verbs/experienced","display":{"en-US":"experienced"}},"object":{"id":"http://example.com/xAPI/activities/myactivity","objectType":"Activity"}}
