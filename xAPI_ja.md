@@ -1379,6 +1379,7 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
             }
         },
         "object": {
+            "objectType": "Activity",
             "id":"http://example.com/website",
             "definition": {
                 "name" : {
