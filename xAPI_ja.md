@@ -2642,13 +2642,22 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 * クライアントはリクエストが許可される機会を増やすために、最低限必要なスコープのみ要求すべきである。
 
 <div style="page-break-after: always;"></div>
+
 <a name="datatransfer"/></a>
+
 ## 7.0 Data Transfer (REST)
+
 このセクションでは xAPI を構成する４つのサブ API （ステートメント、ステート、エージェント プロファイル、アクティビティ プロファイル）について説明する。4つのサブ API  は RESTful な HTTP メソッドによって処理される。ステートメント API は学習記録を追跡するために単独で利用することができる。
 
 __注:__この仕様書中のエンドポイントの例では、"http://example.com/xAPI/" を LRS のベース
-エンドポイントの例としている。その後、他のすべての IRI の構文は、使用される特定のエンドポ
-イントを示す。
+エンドポイントの例としている。それに続くIRI構文は、使用される特定のエンドポイントを示す。
+エンドポイントの全てのリストは、[Appendix F: Table of All Endpoints](#AppendixF)参照。
+
+###### 必要条件
+
+* LRSは、[この章](#datatransfer)に示される全てのエンドポイントに対応しなければならない。
+* LRSがOAuth 1.0を実装する場合、LRSは[6.4.2 OAuth Authorization Scope](#oauthscope)
+に示される全てのOAuthエンドポイントに対応しなければならない。
 
 
 <a name="errorcodes" /></a>
@@ -4522,6 +4531,7 @@ __注記:__ 添付した署名が表示されない場合、 attachments で添�
 
 ## Appendix F: すべてのエンドポイントの表
 
+### 必須のエンドポイント
 <table>
     <tr>
         <th>Endpoint (Base IRI of the LRS Precedes Each Endpoint)</th>
@@ -4554,6 +4564,14 @@ __注記:__ 添付した署名が表示されない場合、 attachments で添�
     <tr>
         <td>about</td>
         <td>LRS Information</td>
+    </tr>
+</table>
+
+### OAuth エンドポイント
+<table>
+    <tr>
+        <th>Endpoint (Base Endpoint of the LRSPrecedes Each Endpoint)</th>
+        <th>Function</th>
     </tr>
     <tr>
         <td>OAuth/initiate</td>
