@@ -1076,7 +1076,7 @@ IRL からアクティビティ定義を解析することができ、そこか�
 各インタラクションタイプについては、[Appendix C](#AppendixC)を参照のこと。
 
 <table>
-    <tr><th>intractionType</th><th>説明</th></tr>
+    <tr><th>interactionType</th><th>説明</th></tr>
     <tr>
         <td>true-false</td>
         <td>次の二値を取るインタラクション: true または false</td>
@@ -1128,7 +1128,7 @@ IRL からアクティビティ定義を解析することができ、そこか�
 Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
 
 <table>
-    <tr><th>intractionType</th><th>フォーマット</th></tr>
+    <tr><th>interactionType</th><th>フォーマット</th></tr>
     <tr>
         <td>true-false</td>
         <td><code>true</code> または <code>false</code> のいずれか</td>
