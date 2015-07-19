@@ -2916,22 +2916,24 @@ LRS は格納されたステートメントが検索可能となる前に応答�
       <td>exact</td>
       <td>「ids」の場合、エージェント、アクティビティ、動詞、そしてグループオブジェクトを識別するために最低限必要な情報のみを含む。匿名グループにおいては各メンバを識別するために必要な最低限の情報を意味する。
       <br/><br/>
-      「exact」の場合、ステートメントが受理された際と完全に同一なエージェント、アクティビティ、動詞、そしてグループオブジェクトを返す。LRS がこれらをインポートすることを目的としてステートメントを要求する場合には、「exact」フォーマットを用いるべきである。
+      「exact」の場合、ステートメントが受理された際と完全に同一なエージェント、アクティビティ、動詞、そしてグループオブジェクトを返す。LRS がこれらをインポートすることを目的としてステートメントを要求する場合には、```exact```フォーマットを用いるべきである。
       <br/><br/>
-      「canonical」の場合、<a href="#queryLangFiltering">以下に示す言語フィルタプロセス</a>を適用した後、LRSによって指定されるアクティビティオブジェクトの正規の定義、動詞の表示名を含んだアクティビティオブジェクトと動詞を返し、もともとのエージェント、グループオブジェクトを"exact"モードで返す
+      「canonical」の場合、<a href="#queryLangFiltering">以下に示す言語フィルタプロセス</a>を適用した後、LRSによって指定されるアクティビティオブジェクトの正規の定義、動詞の表示名を含んだアクティビティオブジェクトと動詞を返し、もともとのエージェント、グループオブジェクトを```exact```モードで返す
       </td>
       <td>任意</td>
     </tr>
     <tr><td>attachments</td><td>Boolean</td><td>False</td>
-        <td>trueの場合、LRS は以前に解説している通り、マルチパートレスポンスフォーマットを用いなければならず、あらゆる添付文書を含めなければならない。falseの場合には LRS はContent-Type application/json の形式で所定の応答を送信し、添付ファイルを使用することはできません。</td><td>任意</td>
+        <td><code>true</code>の場合、LRS は以前に解説している通り、マルチパートレスポンスフォーマットを用いなければならず、あらゆる添付文書を含めなければならない。<code>false</code>の場合には LRS はContent-Type application/json の形式で所定の応答を送信し、添付ファイルを使用することはできない。</td><td>任意</td>
     </tr>
     <tr>
         <td>ascending</td>
         <td>Boolean</td>
         <td>false</td>
-        <td>true の場合、格納された時間の昇順で結果を返す。</td><td>任意</td>
+        <td><code>true</code>の場合、格納された時間の昇順で結果を返す。</td><td>任意</td>
     </tr>
 </table>
+
+__注意：__Booleanパラメータの値は、JSONに同じく```true```または```false```となる。
 
 ###### 必要条件
 
@@ -2946,9 +2948,9 @@ LRS は格納されたステートメントが検索可能となる前に応答�
 
 * LRS はステートメントリクエストに対するあらゆる応答に対して「 X-Experience-API-Consistent-Through 」ヘッダを <a href="https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations">ISO 8601 combined date and time</a> フォーマットを含まなければならない。その値は、指定されたタイプスタンプ以前の "stored" プロパティを持つ全てのステートメントが、妥当な確からしさで取り出し可能になっていることを示すタイムスタンプである。この時間は、ステートメントが検索可能となるまでの遅延をもたらす過剰負荷などの任意の一時的な状態を考慮すべきである。
 
-* GET statementのattachmentプロパティが使用されており「true」の場合、LRSはマルチパートレスポンスフォーマットを使用し、<a href="#attachments">4.1.11</a>で説明されているようにすべてのattachmentsが含まれなければならない。
+* GET statementのattachmentプロパティが使用されており<code>true</code>の場合、LRSはマルチパートレスポンスフォーマットを使用し、<a href="#attachments">4.1.11</a>で説明されているようにすべてのattachmentsが含まれなければならない。
 
-* GET statementのattachmentプロパティが使用されており「 false 」の場合、LRSはattachment raw dataを含めてはならず、application/jsonに報告しなければならない。
+* GET statementのattachmentプロパティが使用されており<code>false</code>の場合、LRSはattachment raw dataを含めてはならず、application/jsonに報告しなければならない。
 
 <a name="queryStatementRef" /></a>
 
