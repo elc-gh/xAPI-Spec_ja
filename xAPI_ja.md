@@ -1162,7 +1162,10 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
     </tr>
     <tr>
         <td>numeric</td>
-        <td><code>:</code> で区切られた最小値と最大値によって示される数値範囲。</td>
+        <td><code>[:]</code> で区切られた最小値と最大値によって示される数値範囲。
+            範囲が最大値または最小値を持たない場合、その値は省略されるが区切り文字はそのまま利用される。例：```"[:]"```は、最大値が４で、最小値を持たないことを示す。正しいレスポンス、または学習者のレスポンスが、範囲ではなく単一の数字である場合は、区切り文字なしにその単一の数字を使っても良い。
+		</td>
+
     </tr>
     <tr>
         <td>other</td>
@@ -1226,7 +1229,7 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
     <tr>
         <td>id</td>
         <td>String</td>
-        <td>SCORM2004 4th 版の Run-Time Environment で定義している " cmi.interactions.n.id" で実際に使用する値</td>
+        <td>リスト中のインタラクションコンポーネントを示す。</td>
         <td>必須</td>
     <tr>
         <td>description</td>
@@ -4171,7 +4174,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
     "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
     "interactionType": "numeric",
     "correctResponsesPattern": [
-        "4:"
+        "4[:]"
     ]
 }
 ```
