@@ -48,7 +48,6 @@ tincan@elc.or.jp
 >次官補室（即応性担当）の Advanced Distributed Learning (ADL) イニシアティブを支援し
 >作成しました。フィードバックやお問い合わせは、helpdesk@adlnet.gov までお送りください。
 
-<div style="page-break-after: always;"></div>
 
 ## 目次
 *   1.0.    [改定履歴](#revhistory)
@@ -57,8 +56,8 @@ tincan@elc.or.jp
     *   2.2.    [貢献者](#contributors)
         *   2.2.1.  [ワーキンググループの参加者](#wg)
         *   2.2.2.  [要求仕様収集への貢献者](#reqparticipants)
-    *   2.3 [>技術に詳しくない人への読み方ガイドライン](#readingguidelines)
-*   3.0.    [用語の定義](#defintions)
+    *   2.3 [技術に詳しくない人への読み方ガイドライン](#readingguidelines)
+*   3.0.    [用語の定義](#definitions)
 *   4.0.    [ステートメント](#statement)
     *   4.1.    [ステートメントプロパティ](#stmtprops)
         *   4.1.1.  [id (識別子)](#stmtid)
@@ -111,7 +110,6 @@ tincan@elc.or.jp
 *   [Appendix F: 全てのエンドポイントの表](#AppendixF)
 *   [Appendix G: クロスドメインリクエストの例](#AppendixG)
 
-<div style="page-break-after: always;"></div>
 <a name="revhistory"/></a>
 ## 1.0 改定履歴
 ###### 0.8 (Project Tin Can API の配布）から 0.9 (2012/03/31)
@@ -157,7 +155,6 @@ Project Tin Can API を提供した Rustici Software が、2012年4月のキッ�
 [1.0.1...1.0.2](https://github.com/adlnet/xAPI-Spec/compare/1.0.1...1.0.2)
 
 
-<div style="page-break-after: always;"></div>
 <a name="roleofxapi"/></a>
 ## 2.0 Experience API の役割
 Experience API (xAPI) は経験に関するステートメントを、Learning Record Store (LRS) に配
@@ -308,7 +305,6 @@ xAPI の要求の収集において、多くの人々や組織から、SCORM®�
 ていただきた。特に、長く、より詳細な説明や表など、直感的でなく多くの要求について長い
 解説をしているところについて当てはまる。
 
-<div style="page-break-after: always;"></div>
 <a name="definitions"/></a>
 ## 3.0 用語の定義
 
@@ -422,8 +418,9 @@ IRL であることもある。動詞、アクティビティ、またはアク�
 どの目的語を特定するために使われる。URI とは異なり、IRI は各国の言語をサ
 ポートするために、ASCII キャラクタ以外を利用することが出来る。
 
-IRI は常にスキーマを含む。これは、本標準による要求ではないが、[RFC 3987]
-(http://www.ietf.org/rfc/rfc3987.txt)に示される IRI の定義による。いわ
+IRI は常にスキーマを含む。これは、本標準による要求ではないが、
+[RFC 3987](http://www.ietf.org/rfc/rfc3987.txt)
+に示される IRI の定義による。いわ
 ゆる '相対 IRI' は、IRI ではない。
 
 <a name="def-irl" /></a>
@@ -486,7 +483,6 @@ __Tin Can API (TCAPI)__: 本仕様書で定義される API の、以前の名�
 __動詞 (Verb)__: ステートメントにおいて、アクティビティに対して、アクターが実行
 する動作を定義する。
 
-<div style="page-break-after: always;"></div>
 <a name="statement"/></a>
 ## 4.0 ステートメント
 
@@ -559,8 +555,7 @@ __動詞 (Verb)__: ステートメントにおいて、アクティビティに�
 てもよい。[4.1.2.2 Groups](#group)参照。
 
 * 添付書類。添付書類はステートメントの一部ではない。また、LRSはクライアントが求めた
-ときは、添付書類なしにステートメントを返答することもある。（詳細は[Statement API's]
-(#stmtapi)の"attachments"パラメータを参照）
+ときは、添付書類なしにステートメントを返答することもある。（詳細は[Statement API's](#stmtapi)の"attachments"パラメータを参照）
 
 
 ##### 必要条件
@@ -571,7 +566,7 @@ __動詞 (Verb)__: ステートメントにおいて、アクティビティに�
 必須または推奨とされる全てのプロパティを用いる最も簡素なステート
 メントの例。
 
-```
+```json
 {
     "id": "12345678-1234-5678-1234-567812345678",
     "actor":{
@@ -741,7 +736,7 @@ Account オブジェクトのすべてのプロパティを以下の表に示す
 意味を持たないアカウント名によって Agent を識別する例を示す。
 
 
-```
+```json
 {
     "objectType": "Agent",
     "account": {
@@ -782,7 +777,6 @@ xAPI ステートメント中の動詞は、学習経験中に行われた行動
         </td>
         <td>必須</td>
     </tr>
-
     <tr>
         <td>display</td>
         <td><a href="#misclangmap">言語マップ</a></td>
@@ -792,7 +786,6 @@ xAPI ステートメント中の動詞は、学習経験中に行われた行動
                      供する。</td>
         <td>推奨</td>
     </tr>
-
 </table>
 
 ###### 動詞 ID の必要条件
@@ -841,7 +834,7 @@ xAPI ステートメント中の動詞は、学習経験中に行われた行動
 ###### 例
 以下に、推奨プロパティを含む動詞の例を示す。
 
-```
+```json
 {
     "id":"http://www.adlnet.gov/XAPIprofile/ran(travelled_a_distance)",
         "display":{
@@ -900,7 +893,7 @@ xAPI における動詞は IRI であり、いかなる言語にも依存しな�
 * アクティビティプロバイダは、適切な動詞が存在しない場合、動詞を作成し利用してもよい。
 
 <a name="object"/></a>
-####4.1.4 Object(目的語)
+#### 4.1.4 Object(目的語)
 
 ###### 説明
 
@@ -926,7 +919,7 @@ xAPI における動詞は IRI であり、いかなる言語にも依存しな�
 
 ##### 4.1.4.1 ObjectType がアクティビティの場合
 
-####### 詳細
+###### 詳細
 
 ステートメントは、ステートメントの 目的語としてアクティビティを示すことができる。本
 ケースにおけるオブジェクトのプロパティは以下の表の通り。
@@ -947,7 +940,7 @@ xAPI における動詞は IRI であり、いかなる言語にも依存しな�
     <tr>
         <td><a href="#actdef">definition</a></td>
         <td>Object</td>
-        <td>メタデータ, <a href="actdef">以下のアクティビティ定義を参照</a>。</td>
+        <td>メタデータ, <a href="#actdef">以下のアクティビティ定義を参照</a>。</td>
         <td>任意</td>
     </tr>
 </table>
@@ -1181,7 +1174,6 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
         <td><code>[:]</code> で区切られた最小値と最大値によって示される数値範囲。
             範囲が最大値または最小値を持たない場合、その値は省略されるが区切り文字はそのまま利用される。例：```"[:]"```は、最大値が４で、最小値を持たないことを示す。正しいレスポンス、または学習者のレスポンスが、範囲ではなく単一の数字である場合は、区切り文字なしにその単一の数字を使っても良い。
 		</td>
-
     </tr>
     <tr>
         <td>other</td>
@@ -1190,7 +1182,7 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
 </table>
 
 ###### 文字列パラメータ
-上に示した返答に含まれるいくつかの値には、追加のパラメータを付与することができる。これらは SCORM 2004 第４版ランタイム環境によって定義された区切り文字列を元にしている。これらのパラメータは ```{parameter=value}``` の形式によって表現される。[Appendix C の long-fill-in の例] (#long-fill-in) を参照。
+上に示した返答に含まれるいくつかの値には、追加のパラメータを付与することができる。これらは SCORM 2004 第４版ランタイム環境によって定義された区切り文字列を元にしている。これらのパラメータは ```{parameter=value}``` の形式によって表現される。[Appendix C の long-fill-in の例](#long-fill-in) を参照。
 
 以下のパラメータはリスト型のインタラクションタイプの要素のリストを定義する文字列の先頭において有効である。
 
@@ -1330,7 +1322,7 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
 いると仮定したとき、以下の例では、どの様にして新しいステートメントで元のステートメン
 トにコメントを発行するかを示している。
 
-```
+```json
 {
     "actor" : {
         "objectType": "Agent",
@@ -1373,7 +1365,7 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
 できる。次の具体例では、 "I planned to visit 'Some Awesome Website'" を示している。
 
 
-```
+```json
 {
     "actor": {
         "objectType": "Agent",
@@ -1472,20 +1464,18 @@ Run-Time Environment. See [Appendix C](#AppendixC) for examples of each format.
       <td>-1から1までの小数</td>
       <td>ある経験において取りうる最高点に対する割合で示した、有る経験に対するスコア。負のスコアの場合には、とりうる最低点に対する割合として計算される。正のスコアの場合、スコアは、素点を最高点で割ったものとして計算される（それらの数値が有る場合〕。
       </td>
-
       <td>推奨</td>
     </tr>
     <tr>
       <td>raw</td>
       <td>min と max の間の小数 'cmi.score.raw'を参照（現状、そうでなければ無制限）</td>
-    　<td>ステートメントで表現されている経験について、アクタが達成したスコア。この数値はスケーリングや平準化によって補正されていないものである。</td>
-
+      <td>ステートメントで表現されている経験について、アクタが達成したスコア。この数値はスケーリングや平準化によって補正されていないものである。</td>
       <td>任意</td>
     </tr>
     <tr>
       <td>min</td>
       <td>maxよりも小さい小数 </td>
-    　<td>ステートメントで表現されている経験についての最も低いスコア。</td>
+      <td>ステートメントで表現されている経験についての最も低いスコア。</td>
       <td>任意</td>
     </tr>
     <tr>
@@ -1564,7 +1554,7 @@ context プロパティは文脈依存の情報をステートメントに付加
 </tr>
 <tr>
 <td>statement</td>
-<td>[Statement Reference] (#stmtref)</td>
+<td><a href="#stmtref">ステートメント参照</a></td>
 <td>このステートメントのコンテキストと見なされる、他のステートメント。</td>
 <td>任意</td>
 </tr>
@@ -1662,7 +1652,7 @@ __注記:__ この節は、ステートメントオブジェクトが持つ全�
 される。ステートメントの目的語が(アクティビティでなく)エージェントであるときに、これ
 は特に有用である。「アンドリューは、代数学1のコンテキストでベンを指導した」。
 
-```
+```json
 {
     "parent" : [
          {"id" : "http://example.adlnet.gov/xapi/example/test1"}
@@ -1681,8 +1671,6 @@ __注記:__ この節は、ステートメントオブジェクトが持つ全�
 経験が発生した時刻。
 
 ###### 詳細
-A timestamp is formatted according to the normal format of ISO 8601 and corresponds to the time of when the events described within this Statement occurred. If it is not included in the Statement when it is submitted to the LRS, the LRS populates it with the same value it would use with [Stored](#stored).
-
 タイムスタンプは、ISO 8601の標準フォーマットにそってフォーマットされ、ス
 テートメントで説明されるイベントが起こった時間に関連付けられる。LRSに送
 信されたステートメント中に、タイムスタンプが含まれない場合は、LRSは
@@ -1725,7 +1713,7 @@ stored プロパティは、ステートメントが記録されたときの正�
 ートメントに示す経験が発生した時間を記録するために[Timestamp](#timestamp)を用いる。
 
 ###### 必要条件
-* stored プロパティは ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations)に従う形式でなければならない。
+* stored プロパティは [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations)に従う形式でなければならない。
 * storedプロパティはLRSによって設定されなければならない。LRSは受信するステートメント
 のstoredプロパティの値を検証し上書きする。
 * stored プロパティはタイムゾーンを含むべきである。
@@ -1781,20 +1769,23 @@ authority プロパティは「誰、または何がこのステートメント�
 
 OAuth consumer とユーザのペア。
 
-```
-?"authority": {
-    "objectType" : "Group",
-    "member": [
-        {
-            "account": {
-                "homePage":"http://example.com/xAPI/OAuth/Token",
-                "name":"oauth_consumer_x75db"
+```json
+{
+    "authority": {
+        "objectType" : "Group",
+        "member": [
+            {
+                "account": {
+                    "homePage":"http://example.com/xAPI/OAuth/Token",
+                    "name":"oauth_consumer_x75db"
+                }
+            },
+            {
+                "mbox":"mailto:bob@example.com"
             }
-}, {
-            "mbox":"mailto:bob@example.com"
-        }
-] }
-
+        ]
+    }
+}
 ```
 
 <a name="version"/></a>
@@ -1836,9 +1827,7 @@ LRS からのデータを処理するシステムは、ステートメントの�
 <table>
     <tr><th>プロパティ</th><th>タイプ</th><th>説明</th><th>必須</th><th>対応するリクエストパラメータ</th></tr>
     <tr>
-        <a name="attachmentUsage" /></a>
-
-        <td>usageType</td>
+        <td><a name="attachmentUsage" /></a>usageType</td>
         <td>IRI</td>
         <td>この添付文書の利用方法を規定する。例えば、添付文書の期待されるユースケースの１つに「修了証明」を含むことがある。この用途に対応するタイプ IRI を作成し、修了証明添付文書と一緒に利用されなければならない。</td>
         <td>必須</td>
@@ -1903,7 +1892,7 @@ _添付文書交換の手続き_
 添付文書を含むステートメントバッチ、ステートメントの結果、または、１つのステートメントは、以下の条件のうちの１つを満たさなければならない:
 
 * 添付文書フィルタが false の場合のステートメントの結果を除き、"application/json"  タイプで、全ての添付文書毎に fileUrl を含まなければならない。
-* RFC1341 (http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) における multipart/mixed の定義に準拠しなければならない。かつ、以下の条件を満たさなければならない:
+* [RFC1341](http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) における multipart/mixed の定義に準拠しなければならない。かつ、以下の条件を満たさなければならない:
     * multipart 文書の最初にはステートメント自身が "application/json" タイプで含まれる。
     * 他の追加部分は、添付文書の生のデータを含み、ステートメントの論理部分を形成する。この機能はステートメントリソースに対して PUT や POST が発行されたときに利用可能である。
     * 最初の（ステートメント）部分に続く各部分のヘッダーには X-Experience-API-Hashパラメータを含まなければならない。
@@ -2019,7 +2008,7 @@ here is a simple attachment
 IRI の完全な検証は非常に難しいため、データの可搬性を担保する責任の大部分はクライアント側にある。
 
 * 値として送信される IRI は有効なものでなければならない。
-* 同様の理由から、言語マップのキーは、有効な RFC 5646 (http://tools.ietf.org/html/rfc5646) 言語タグと一緒に送られなければならない。
+* 同様の理由から、言語マップのキーは、有効な [RFC 5646](http://tools.ietf.org/html/rfc5646) 言語タグと一緒に送られなければならない。
 * IRI の生成には、文字列結合ではなく、ライブラリを利用すべきである。
 * 特別に指定されない限り、値は大文字/小文字を区別すると考えるべきである。
 * 大文字/小文字の区別がないデータを送る場合は、小文字で送られるべきである。
@@ -2066,9 +2055,7 @@ IRI の完全な検証は非常に難しいため、データの可搬性を担�
         <td>statements</td>
         <td>Array of Statements</td>
         <td>ステートメントのリスト。さらに結果があるのに，戻ってきたリストが（ページ制限により）制限されていたら，コンテイナに含まれる "statements" プロパティに配置されるだろう。コンテイナは，ステートメント結果オブジェクトのさらなる要素によって提供される IRL に置かれる。
-
         ステートメントのリスト。（ページ区切りにより）戻されるリストが一部に制限されており、リストの続きがある場合、それらは結果の Statement オブジェクトの "more" 要素によって提供される IRL に存在するコンテナの "statements" プロパティに配置される。
-
         合致するステートメントがない場合は、このプロパティは空の配列をもつ。
         </td>
         <td>必須</td>
@@ -2124,7 +2111,7 @@ __注記:__ 他のステートメントの参照作成に関する詳細につ�
 このステートメントの例は、ステートメント id が "e05aa883-acaf-40ad-bf54-02c8ce485fb0" で
 示される以前のステートメントを無効化する。
 
-```
+```json
 {
     "actor" : {
         "objectType": "Agent",
@@ -2192,10 +2179,9 @@ JSON web signature (JWS) を含まなければならない： http://tools.ietf.
 __注記:__ 含まれる X.509 証明書に対して認証するステップは、安全対策のためでは
 なく、署名の中に誤りを発見するためのものである。署名付きステートメントを認証するステップは、要求される確実性の度合いにより変化するものであり、この仕様の規定外である。
 
-#####　例
+##### 例
 例は<a href="#AppendixE">Appendix E: 署名ステートメント例</a>を参照。
 
-<div style="page-break-after: always;"></div>
 <a name="misctypes"/></a>
 ## 5.0 各種タイプ</a>
 
@@ -2306,7 +2292,7 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 
 ##### 詳細
 この仕様において利用される、いくつかの IRI 識別子のタイプが存在する：
-* <a href="#verb">>動詞</a>
+* <a href="#verb">動詞</a>
 * <a href="#acturi">アクティビティ ID</a>
 * <a href="#acttype">アクティビティタイプ</a>
 * <a href="#miscext">拡張キー</a>
@@ -2356,7 +2342,6 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 にその識別子が本仕様で利用する目的で作成されなかった場合においては、このメタデ
 ータは、識別子の IRL に記録された他のフォーマット内のメタデータを含んでもよい。
 
-<div style="page-break-after: always;"></div>
 <a name="rtcom"/></a>
 ## 6.0 ランタイム通信
 
@@ -2392,16 +2377,14 @@ __注記:__ 拡張のみで構成されるステートメントは、ほかの�
 
 ###### 詳細
 
-1.0.0版より、 xAPI は [セマンティックバージョニング 1.0.0]
-(http://semver.org/spec/v1.0.0.html) に従いバージョン付けされる。
+1.0.0版より、 xAPI は [セマンティックバージョニング 1.0.0](http://semver.org/spec/v1.0.0.html) に従いバージョン付けされる。
 クライアントからのすべてのリクエストや LRS からの全てのレスポンスは、
 "X-Experience-API-Version" を名前、バージョンを値とする HTTP ヘッダーを持たなけ
 ればならない。
 
 例:  ``X-Experience-API-Version : 1.0.1``
 
-1.0.0版より、 xAPI は [セマンティックバージョニング 1.0.0]
-(http://semver.org/spec/v1.0.0.html) に従いバージョン付けされる。
+1.0.0版より、 xAPI は [セマンティックバージョニング 1.0.0](http://semver.org/spec/v1.0.0.html) に従いバージョン付けされる。
 クライアントからの全てのリクエストと、LRSからの全てのレスポンスは、
 "X-Experience-API-Version" を名前、バージョンを値とする HTTP ヘッダーを持たなけ
 ればならない。たとえば、バージョン1.0.3においては、``X-Experience-API-Version : 1.0.3``
@@ -2503,7 +2486,7 @@ PUT リクエストをいずれのヘッダもなく既存のリソースに対�
 <table border="1">
 <tr><th></th><th>認識された利用者</th><th>認識されていない利用者</th></tr>
 <tr>
-<td><アプリケーションが登録される場合</td>
+<td>アプリケーションが登録される場合</td>
 <td>OAuth に対応する標準ワークフローが適用される。</td>
 <td>LRS は付加的な利用者証明書を持たない xAPI アクセスを行うアプリケーションを信頼する。 OAuth トークンステップは呼び出されない。
 </td>
@@ -2670,7 +2653,6 @@ LRS と xAPI を利用して通信するアプリケーションが、間違っ�
 * LRS はその他のスコープをサポートしてもよい。
 * クライアントはリクエストが許可される機会を増やすために、最低限必要なスコープのみ要求すべきである。
 
-<div style="page-break-after: always;"></div>
 
 <a name="datatransfer"/></a>
 
@@ -2821,7 +2803,7 @@ LRSが要求を拒否したことを示す。
 Experience API の基本的な通信手段である。
 
 <a name="stmtapiput"/></a>
-####7.2.1 PUT　ステートメント
+#### 7.2.1 PUT　ステートメント
 
 ###### 詳細
 
@@ -2849,7 +2831,7 @@ Experience API の基本的な通信手段である。
 * 供給される場合、ステートメントの"id"プロパティはリクエストの"statementId"パラメータと一致しなければならない。
 
 <a name="stmtapipost"/></a>
-####7.2.2 POST ステートメント
+#### 7.2.2 POST ステートメント
 
 ###### 詳細
 
@@ -2876,9 +2858,9 @@ Experience API の基本的な通信手段である。
 
 LRS は格納されたステートメントが検索可能となる前に応答してもよい。
 
-* GET ステートメントは、必要に応じ、クエリーストリングスとしてフォームプロパティをもつ POST としても呼べるが制約がある。詳細は、[7.8 クロスオリジンリクエスト] (#78-cross-origin-requests) を参照のこと。
+* GET ステートメントは、必要に応じ、クエリーストリングスとしてフォームプロパティをもつ POST としても呼べるが制約がある。詳細は、[7.8 クロスオリジンリクエスト](#78-cross-origin-requests) を参照のこと。
 
-* LRSは、POST が、ステートメントの追加か、複数ステートメントのリストのどちらであるかを引き渡すパラメータによって弁別可能にしなければならない。詳細は、[7.8 クロスオリジンリクエスト] (#78-cross-origin-requests) を参照のこと。
+* LRSは、POST が、ステートメントの追加か、複数ステートメントのリストのどちらであるかを引き渡すパラメータによって弁別可能にしなければならない。詳細は、[7.8 クロスオリジンリクエスト](#78-cross-origin-requests) を参照のこと。
 
 
 <a name="stmtapiget"/></a>
@@ -3027,8 +3009,7 @@ __注釈:__コンテキストの中のステートメントプロパティの値
 
 * LRS は voidedStatementId によりリクエストされたステートメントでない限り、無効となった
 ステートメントを返してはならない。
-* LRS は、 [StatementRefs によるフィルタ条件]
-(#queryStatementRef) で示した通り、時間またはシーケンス基準による直接・間接の取り
+* LRS は、 [StatementRefs によるフィルタ条件](#queryStatementRef) で示した通り、時間またはシーケンス基準による直接・間接の取り
 出しの場合には、ステートメント自体が無効化されている場合を除き、無効化されたステー
 トメントを参照しているステートメントも返さなければならない。これは、自分自身を無効化
 することのできない、無効化ステートメントを含む。レポーティングツールは無効化ステー
@@ -3085,7 +3066,7 @@ __注釈:__コンテキストの中のステートメントプロパティの値
 例えばドキュメントは次の情報を含むとする
 
 
-```
+```json
 {
 	"x" : "foo",
 	"y" : "bar"
@@ -3104,7 +3085,7 @@ LRS がコンテンツタイプが application/json の既存のドキュメン�
 例えば、既に存在する上記ドキュメントを POST したものと同一 ID で、再度このドキュメン
 トが POST された場合：
 
-```
+```json
 {
     "x" : "bash",
     "z" : "faz"
@@ -3113,7 +3094,7 @@ LRS がコンテンツタイプが application/json の既存のドキュメン�
 
 LRS に格納されるドキュメントの結果は次の通りとなる。
 
-```
+```json
 {
     "x" : "bash",
     "y" : "bar",
@@ -3627,13 +3608,12 @@ LRS にアクセスするクライアントは、特定のステートメント�
     *LRS リソースの浪費を避けるために、 Content-Length ヘッダーは省略される。
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixA"/></a>
 ## Appendix A: ステートメント例
 
 簡単なステートメント例（改行は表示目的）
 
-```
+```json
 {
     "id":"fd41c918-b88b-4b20-a0a5-a4c32391aaa0",
     "actor":{
@@ -3664,7 +3644,7 @@ LRS にアクセスするクライアントは、特定のステートメント�
 ```
 Verbの「 attempted 」を用いた一般的で簡単な完了
 
-```
+```json
 {
     "actor":{
         "objectType": "Agent",
@@ -3700,7 +3680,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 
 利用できる大部分のプロパティを紹介している長いステートメント例。この例は、ステートメントが権限を含んでLRSによって戻され、LRSが設定したプロパティが記録されることを示す。
 
-```
+```json
 {
     "id": "6690e6c9-3ef0-4ed3-8b37-7f3964730bee",
     "actor": {
@@ -3835,7 +3815,6 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixB"/></a>
 ## Appendix B: 違うタイプのステートメントオブジェクトの例
 
@@ -3843,7 +3822,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 この付録は、それぞれの例を示す。
 
 ###### Activity アクティビティ
-```
+```json
 {
     "id": "http://www.example.co.uk/exampleactivity",
     "definition": {
@@ -3862,7 +3841,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### Agent エージェント
-```
+```json
 {
     "name": "Andrew Downes",
     "mbox": "mailto:andrew@example.co.uk",
@@ -3873,7 +3852,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ###### Group グループ
 
 この例は、メンバーを含む指名グループを示す。
-```
+```json
 {
     "name": "Example Group",
     "account" : {
@@ -3900,7 +3879,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ###### Statement ステートメント
 
 この例は、オブジェクトがステートメントリファレンスであるサブステートメントを示す。
-```
+```json
 {
         "objectType": "SubStatement",
         "actor" : {
@@ -3921,14 +3900,13 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixC"/></a>
 
 ## Appendix C: アクティビティタイプ「 cmi.interaction 」のための定義例
 
 ###### true-false true/false
 
-```
+```json
 "definition": {
     "description": {
         "en-US": "Does the xAPI include the concept of statements?"
@@ -3942,7 +3920,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### choice 選択
-```
+```json
 "definition": {
     "description": {
         "en-US": "Which of these prototypes are available at the beta site?"
@@ -3982,7 +3960,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### fill-in
-```
+```json
 "definition": {
     "description": {
         "en-US": "Ben is often heard saying: "
@@ -3996,7 +3974,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### long-fill-in
-```
+```json
 "definition": {
     "description": {
         "en-US": "What is the purpose of the xAPI?"
@@ -4010,7 +3988,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### likert
-```
+```json
 "definition": {
     "description": {
         "en-US": "How awesome is Experience API?"
@@ -4050,7 +4028,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### matching
-```
+```json
 "definition": {
     "description": {
         "en-US": "Match these people to their kickball team:"
@@ -4116,7 +4094,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### performance
-```
+```json
 "definition": {
     "description": {
         "en-US": "This interaction measures performance over a day of RS sports:"
@@ -4150,7 +4128,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### sequencing
-```
+```json
 "definition": {
     "description": {
         "en-US": "Order players by their pong ladder position:"
@@ -4189,7 +4167,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 ###### numeric
-```
+```json
 "definition": {
     "description": {
         "en-US": "How many jokes is Chris the butt of each day?"
@@ -4205,7 +4183,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 この例において、正解の最小値は 4 であり、最大値はない。5, 6, 976 といった数値は全て正解となる。
 
 ###### other
-```
+```json
 "definition": {
     "description": {
         "en-US": "On this map, please mark Franklin, TN"
@@ -4219,7 +4197,6 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 ```
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixD"/></a>
 
 ## Appendix D: 1.0.0へステートメントを変換
@@ -4228,9 +4205,9 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 
 これは、1.0.0の仕様であり、実装者が、従来のバージョンの仕様を考慮する必要がないように努めた。しかしながら、従来のバージョンは、注目に値する普及を示した。このデータコンバージョンは、旧バージョンを用いて記録されたデータを継続して活用でき、新しい実装者も同様の方式で利用できることを目指して作成した。
 
-######Details 詳細
+###### 詳細
 
-######バージョン0.9を元に作られたステートメントのコンバージョン
+###### バージョン0.9を元に作られたステートメントのコンバージョン
 
 0.9から作成されたステートメントを変換する1.0.0システムは以下のステップに沿っていなければならない。
 
@@ -4252,7 +4229,7 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 
 
 
-######バージョン0.95を元に作られたステートメントのコンバージョン
+###### バージョン0.95を元に作られたステートメントのコンバージョン
 
 0.95で作成されたステートメントを変換する1.0.0のシステムは、以下のステップに従わなければならない。
 
@@ -4263,12 +4240,12 @@ Verbの「 attempted 」を用いた一般的で簡単な完了
 * もしコンテキストのステートメントプロパティが StatementRef 以外に設定されたら、ステートメントからプロパティを削除する。
 * 他すべてのプロパティは stored を含め、変更せずに保持すること。 stored はステートメントが他システムへ渡った場合についても最新化される。
 
-######Example 例
+###### 例
 
 
 A 0.9 ステートメント
 
-```
+```json
 {
     "id": "d1eec41f-1e93-4ed6-acbf-5c4bd0c24269",
     "actor": {
@@ -4330,7 +4307,7 @@ A 0.9 ステートメント
 ```
 
 Converted to 1.0.0: 1.0.0に変換
-```
+```json
 {
     "version": "1.0.0",
     "id": "d1eec41f-1e93-4ed6-acbf-5c4bd0c24269",
@@ -4390,14 +4367,13 @@ Converted to 1.0.0: 1.0.0に変換
 ```
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixE"/></a>
 ## Appendix E: 署名ステートメント例
 「4.4 署名ステートメント」に記載された署名ステートメント例
 
 署名されるべきオリジナルステートメントのリスト。この例では、新しい行が「CR+LF (0x0D + 0x0A)」を含められる。
 
-```
+```json
 {
     "version": "1.0.0",
     "id": "33cff416-e331-4c9d-969e-5373a1756120",
@@ -4499,7 +4475,7 @@ ma5/Ycs0GTyrECY=
 
 JWSヘッダー。アルゴリズムを記すのと一緒に、署名証明書のために証明書チェーンが含まれることに注意しなさい。
 
-```
+```json
 {
     "alg": "RS256",
     "x5c": [
@@ -4517,7 +4493,7 @@ ew0KICAgICJhbGciOiAiUlMyNTYiLA0KICAgICJ4NWMiOiBbDQogICAgICAgICJNSUlEQVRDQ0FtcWdB
 
 署名されたステートメント
 
-```
+```json
 {
     "version": "1.0.0",
     "id": "33cff416-e331-4c9d-969e-5373a1756120",
@@ -4561,9 +4537,7 @@ ew0KICAgICJhbGciOiAiUlMyNTYiLA0KICAgICJ4NWMiOiBbDQogICAgICAgICJNSUlEQVRDQ0FtcWdB
 __注記:__ 添付した署名が表示されない場合、 attachments で添付型メッセージのフォーマットを確認すること。
 
 
-<div style="page-break-after: always;"></div>
 <a name="AppendixF"/></a>
-
 ## Appendix F: すべてのエンドポイントの表
 
 ### 必須のエンドポイント
